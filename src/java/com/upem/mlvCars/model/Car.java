@@ -1,5 +1,6 @@
 package com.upem.mlvCars.model;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -30,6 +31,9 @@ public class Car extends Vehicle {
 
     @Column(name = "automaticTransmission")
     private boolean automaticTransmission;
+
+    @Column(name = "purchaseDate")
+    private Date purchaseDate;
 
     public CarType getType() {
         return type;
@@ -69,6 +73,14 @@ public class Car extends Vehicle {
 
     public void setAutomaticTransmission(boolean automaticTransmission) {
         this.automaticTransmission = automaticTransmission;
+    }
+
+    public Date getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
     }
 
 }

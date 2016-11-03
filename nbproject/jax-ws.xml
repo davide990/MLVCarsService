@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
   <services>
-    <service name="CarsService">
-      <implementation-class>com.upem.mlvCars.services.CarsService</implementation-class>
+    <service name="MlvCarsService">
+      <implementation-class>com.upem.mlvCars.services.MlvCarsService</implementation-class>
+    </service>
+    <service name="MlvRentalService">
+      <implementation-class>com.upem.mlvCars.services.MlvRentalService</implementation-class>
     </service>
   </services>
   <clients/>

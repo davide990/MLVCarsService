@@ -1,5 +1,6 @@
 package com.upem.mlvCars.dao;
 
+import com.upem.mlvCars.model.Car;
 import com.upem.mlvCars.model.Vehicle;
 import java.util.List;
 import java.util.logging.Level;
@@ -55,7 +56,7 @@ public class mlvCarsDAO {
 
     public Vehicle getVehicleByID(int student_id) {
         Vehicle s;
-        TypedQuery<Vehicle> q = em.createQuery("select e from vehicle e where e.student_id = '" + student_id + "'", Vehicle.class);
+        TypedQuery<Vehicle> q = em.createQuery("select e from vehicle e where e.id = '" + student_id + "'", Vehicle.class);
 
         try {
             s = q.getSingleResult();
@@ -69,6 +70,45 @@ public class mlvCarsDAO {
     public Vehicle getVehicleByMaxPassengers(int mp) {
         Vehicle s;
         TypedQuery<Vehicle> q = em.createQuery("select e from vehicle e where e.maxPassengers = '" + mp + "'", Vehicle.class);
+
+        try {
+            s = q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+
+        return s;
+    }
+
+    public Car getCarByID(int id) {
+        Car s;
+        TypedQuery<Car> q = em.createQuery("select e from vehicle e where e.id = '" + id + "'", Car.class);
+
+        try {
+            s = q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+
+        return s;
+    }
+
+    public Car getCarByBrand(String brand) {
+        Car s;
+        TypedQuery<Car> q = em.createQuery("select e from vehicle e where e.id = '" + brand + "'", Car.class);
+
+        try {
+            s = q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+
+        return s;
+    }
+
+    public Car getCarByModel(String model) {
+        Car s;
+        TypedQuery<Car> q = em.createQuery("select e from vehicle e where e.model = '" + model + "'", Car.class);
 
         try {
             s = q.getSingleResult();
