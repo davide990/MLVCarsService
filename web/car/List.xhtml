@@ -76,7 +76,7 @@
                     </p:dataTable>
                 </h:panelGroup>
                 <br />
-                <p:commandButton action="#{carController.prepareCreate}" value="#{bundle.ListCarCreateLink}"/>
+                <p:commandButton ajax="true" update=":bodyForm" action="#{carController.prepareCreate}" value="#{bundle.ListCarCreateLink}"/>
                 <br />
                 <br />
                 <p:button outcome="/index" value="#{bundle.ListCarIndexLink}"/>
