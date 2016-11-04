@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <p:outputLabel value="Hello USERNAME"/>
+    <br/>
+    <br/>
+    <p:commandButton value="My Profile"/>
+    <br/>
+    <p:commandButton ajax="true" update=":bodyForm" action="#{carController.prepareCreate}" value="#{bundle.ListCarCreateLink}"/>
+    <br/>
+    <p:commandButton ajax="true" update=":bodyForm" action="#{carController.prepareList}" value="#{bundle.CreateCarShowAllLink}" immediate="true"/>
+
+    <br/>
+    <p:commandButton value="Log Out"/>
+
+
+</html>
+

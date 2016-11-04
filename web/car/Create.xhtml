@@ -10,20 +10,9 @@
         <ui:define name="title">
             <h:outputText value="#{bundle.CreateCarTitle}"></h:outputText>
         </ui:define>
-        
         <ui:define name="leftBar">
-            <p:outputLabel value="Hello USERNAME"/>
-            <br/>
-            <br/>
-            <p:commandButton value="My Profile"/>
-            <br/>
-            <p:commandButton value="Add new car"/>
-            <br/>
-            <p:commandButton value="List all cars"/>
-            <br/>
-            <p:commandButton value="Log Out"/>
+            <ui:include src="leftBar.xhtml"/>
         </ui:define>
-        
         <ui:define name="body">
             <h:form>
                 <p:growl id="growl" showDetail="true" sticky="true" />
@@ -50,10 +39,6 @@
                 </p:panelGrid>
                 <br />
                 <p:commandButton action="#{carController.create}" value="#{bundle.CreateCarSaveLink}" ajax="false" />
-                <br />
-                <br />
-                <p:commandButton action="#{carController.prepareList}" value="#{bundle.CreateCarShowAllLink}" immediate="true"/>
-                <br />
                 <br />
                 <p:button outcome="/index" value="#{bundle.CreateCarIndexLink}"/>
             </h:form>
