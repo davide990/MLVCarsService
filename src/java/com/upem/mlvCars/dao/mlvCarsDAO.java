@@ -30,7 +30,6 @@ public class mlvCarsDAO {
          */
         logger.log(Level.INFO, "Adding vehicle ID: " + v.getId());
         em.persist(v);
-
     }
 
     public void updateVehicle(Vehicle v) {
