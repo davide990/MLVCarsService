@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -31,13 +32,11 @@ public class CarController implements Serializable {
 
     public CarController() {
     }
-    
-    
-    public CarType[] getCarTypes()
-    {
-        return  CarType.values();
+
+    public CarType[] getCarTypes() {
+        return CarType.values();
     }
-    
+
     public Car getSelected() {
         if (current == null) {
             current = new Car();
@@ -88,10 +87,12 @@ public class CarController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CarCreated"));
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success","Car model " + current.getModel() + " successful added");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Cannot add car " + current.getModel() + ".\nPlease check your input!");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
             return null;
         }
     }

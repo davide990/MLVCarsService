@@ -11,10 +11,8 @@
             <h:outputText value="#{bundle.CreateCarTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
             <h:form>
+                <p:growl id="growl" showDetail="true" sticky="true" />
                 <p:panelGrid columns="2">
                     <p:outputLabel for="type" value="#{bundle.CreateCarLabel_type}" />
                     <p:selectOneMenu id="type" value="#{carController.selected.type}" style="width:125px" effect="fade">
@@ -39,7 +37,7 @@
                     <p:inputText id="id" value="#{carController.selected.id}" title="#{bundle.CreateCarTitle_id}" required="true" requiredMessage="#{bundle.CreateCarRequiredMessage_id}"/>
                 </p:panelGrid>
                 <br />
-                <p:commandButton action="#{carController.create}" value="#{bundle.CreateCarSaveLink}" />
+                <p:commandButton action="#{carController.create}" value="#{bundle.CreateCarSaveLink}" ajax="false" />
                 <br />
                 <br />
                 <p:commandButton action="#{carController.prepareList}" value="#{bundle.CreateCarShowAllLink}" immediate="true"/>

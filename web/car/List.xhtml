@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/template.xhtml">
@@ -19,50 +20,50 @@
                     <h:outputText value="#{carController.pagination.pageFirstItem + 1}..#{carController.pagination.pageLastItem + 1}/#{carController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{carController.previous}" value="#{bundle.Previous} #{carController.pagination.pageSize}" rendered="#{carController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{carController.next}" value="#{bundle.Next} #{carController.pagination.pageSize}" rendered="#{carController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{carController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
+                    <p:dataTable value="#{carController.items}" var="item" style="border:solid 1px">
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCarTitle_type}"/>
                             </f:facet>
                             <h:outputText value="#{item.type}"/>
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCarTitle_brand}"/>
                             </f:facet>
                             <h:outputText value="#{item.brand}"/>
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCarTitle_model}"/>
                             </f:facet>
                             <h:outputText value="#{item.model}"/>
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCarTitle_purchaseDate}"/>
                             </f:facet>
                             <h:outputText value="#{item.purchaseDate}"/>
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCarTitle_maxPassengers}"/>
                             </f:facet>
                             <h:outputText value="#{item.maxPassengers}"/>
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCarTitle_maxSpeed}"/>
                             </f:facet>
                             <h:outputText value="#{item.maxSpeed}"/>
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCarTitle_id}"/>
                             </f:facet>
                             <h:outputText value="#{item.id}"/>
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
@@ -71,14 +72,14 @@
                             <h:commandLink action="#{carController.prepareEdit}" value="#{bundle.ListCarEditLink}"/>
                             <h:outputText value=" "/>
                             <h:commandLink action="#{carController.destroy}" value="#{bundle.ListCarDestroyLink}"/>
-                        </h:column>
-                    </h:dataTable>
+                        </p:column>
+                    </p:dataTable>
                 </h:panelGroup>
                 <br />
-                <h:commandLink action="#{carController.prepareCreate}" value="#{bundle.ListCarCreateLink}"/>
+                <p:commandButton action="#{carController.prepareCreate}" value="#{bundle.ListCarCreateLink}"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{bundle.ListCarIndexLink}"/>
+                <p:button outcome="/index" value="#{bundle.ListCarIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

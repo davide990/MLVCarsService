@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/template.xhtml">
@@ -14,7 +15,7 @@
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <h:form>
-                <h:panelGrid columns="2">
+                <p:panelGrid columns="2">
                     <h:outputText value="#{bundle.ViewCarLabel_type}"/>
                     <h:outputText value="#{carController.selected.type}" title="#{bundle.ViewCarTitle_type}"/>
                     <h:outputText value="#{bundle.ViewCarLabel_brand}"/>
@@ -29,19 +30,19 @@
                     <h:outputText value="#{carController.selected.maxSpeed}" title="#{bundle.ViewCarTitle_maxSpeed}"/>
                     <h:outputText value="#{bundle.ViewCarLabel_id}"/>
                     <h:outputText value="#{carController.selected.id}" title="#{bundle.ViewCarTitle_id}"/>
-                </h:panelGrid>
+                </p:panelGrid>
                 <br />
-                <h:commandLink action="#{carController.destroyAndView}" value="#{bundle.ViewCarDestroyLink}"/>
-                <br />
-                <br />
-                <h:link outcome="Edit" value="#{bundle.ViewCarEditLink}"/>
-                <br />
-                <h:commandLink action="#{carController.prepareCreate}" value="#{bundle.ViewCarCreateLink}" />
-                <br />
-                <h:commandLink action="#{carController.prepareList}" value="#{bundle.ViewCarShowAllLink}"/>
+                <p:commandButton action="#{carController.destroyAndView}" value="#{bundle.ViewCarDestroyLink}"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{bundle.ViewCarIndexLink}"/>
+                <p:button outcome="Edit" value="#{bundle.ViewCarEditLink}"/>
+                <br />
+                <p:commandButton action="#{carController.prepareCreate}" value="#{bundle.ViewCarCreateLink}" />
+                <br />
+                <p:commandButton action="#{carController.prepareList}" value="#{bundle.ViewCarShowAllLink}"/>
+                <br />
+                <br />
+                <p:button outcome="/index" value="#{bundle.ViewCarIndexLink}"/>
 
             </h:form>
         </ui:define>
