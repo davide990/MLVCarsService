@@ -11,35 +11,31 @@
             <h:outputText value="#{bundle.EditCarTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
             <h:form>
+                <p:growl id="growl" showDetail="true" sticky="true" />
                 <p:panelGrid columns="2">
                     <h:outputLabel value="#{bundle.EditCarLabel_type}" for="type" />
-                    <p:inputText id="type" value="#{carController.selected.type}" title="#{bundle.EditCarTitle_type}" />
+                    <p:selectOneMenu id="type" value="#{carController.selected.type}" style="width:125px" effect="fade">
+                        <f:selectItems value="#{carController.carTypes}"
+                                       var="carType"
+                                       itemValue="#{carType}"
+                                       itemLabel="#{carType}" />
+                    </p:selectOneMenu>
                     <h:outputLabel value="#{bundle.EditCarLabel_brand}" for="brand" />
                     <p:inputText id="brand" value="#{carController.selected.brand}" title="#{bundle.EditCarTitle_brand}" />
                     <h:outputLabel value="#{bundle.EditCarLabel_model}" for="model" />
                     <p:inputText id="model" value="#{carController.selected.model}" title="#{bundle.EditCarTitle_model}" />
                     <h:outputLabel value="#{bundle.EditCarLabel_purchaseDate}" for="purchaseDate" />
-                    <p:inputText id="purchaseDate" value="#{carController.selected.purchaseDate}" title="#{bundle.EditCarTitle_purchaseDate}" />
+                    <p:calendar  id="purchaseDate" value="#{carController.selected.purchaseDate}" title="#{bundle.EditCarTitle_purchaseDate}" showOn="button" />                    
                     <h:outputLabel value="#{bundle.EditCarLabel_maxPassengers}" for="maxPassengers" />
                     <p:inputText id="maxPassengers" value="#{carController.selected.maxPassengers}" title="#{bundle.EditCarTitle_maxPassengers}" />
                     <h:outputLabel value="#{bundle.EditCarLabel_maxSpeed}" for="maxSpeed" />
                     <p:inputText id="maxSpeed" value="#{carController.selected.maxSpeed}" title="#{bundle.EditCarTitle_maxSpeed}" />
-                    <h:outputLabel value="#{bundle.EditCarLabel_id}" for="id" />
-                    <p:inputText id="id" value="#{carController.selected.id}" title="#{bundle.EditCarTitle_id}" required="true" requiredMessage="#{bundle.EditCarRequiredMessage_id}"/>
                 </p:panelGrid>
-                <p:commandButton action="#{carController.update}" value="#{bundle.EditCarSaveLink}"/>
+                <p:commandButton ajax="false" action="#{carController.update}" value="#{bundle.EditCarSaveLink}"/>
                 <br />
                 <br />
                 <p:button outcome="View" value="#{bundle.EditCarViewLink}"/>
-                <br />
-                <p:commandButton action="#{carController.prepareList}" value="#{bundle.EditCarShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <p:button outcome="/index" value="#{bundle.EditCarIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>

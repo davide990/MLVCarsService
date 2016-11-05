@@ -14,7 +14,7 @@
             <ui:include src="leftBar.xhtml"/>
         </ui:define>
         <ui:define name="body">
-            <h:form styleClass="jsfcrud_list_form">
+            <h:form>
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
@@ -70,19 +70,14 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{carController.prepareView}" value="#{bundle.ListCarViewLink}"/>
+                            <p:commandLink ajax="true" update="@all" action="#{carController.prepareView}" value="#{bundle.ListCarViewLink}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{carController.prepareEdit}" value="#{bundle.ListCarEditLink}"/>
+                            <p:commandLink ajax="true" update="@all" action="#{carController.prepareEdit}" value="#{bundle.ListCarEditLink}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{carController.destroy}" value="#{bundle.ListCarDestroyLink}"/>
+                            <p:commandLink ajax="true" update="@all" action="#{carController.destroy}" value="#{bundle.ListCarDestroyLink}"/>
                         </p:column>
                     </p:dataTable>
                 </h:panelGroup>
-                <br />
-                <p:commandButton ajax="true" update=":bodyForm" action="#{carController.prepareCreate}" value="#{bundle.ListCarCreateLink}"/>
-                <br />
-                <br />
-                <p:button outcome="/index" value="#{bundle.ListCarIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

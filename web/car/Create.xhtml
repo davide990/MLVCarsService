@@ -34,8 +34,6 @@
                     <p:inputText id="maxPassengers" value="#{carController.selected.maxPassengers}" title="#{bundle.CreateCarTitle_maxPassengers}" />
                     <h:outputLabel value="#{bundle.CreateCarLabel_maxSpeed}" for="maxSpeed" />
                     <p:inputText id="maxSpeed" value="#{carController.selected.maxSpeed}" title="#{bundle.CreateCarTitle_maxSpeed}" />
-                    <h:outputLabel value="#{bundle.CreateCarLabel_id}" for="id" />
-                    <p:inputText id="id" value="#{carController.selected.id}" title="#{bundle.CreateCarTitle_id}" required="true" requiredMessage="#{bundle.CreateCarRequiredMessage_id}"/>
                 </p:panelGrid>
                 <br />
                 <p:commandButton action="#{carController.create}" value="#{bundle.CreateCarSaveLink}" ajax="false" />

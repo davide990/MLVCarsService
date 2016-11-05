@@ -9,13 +9,10 @@
     <br/>
     <p:commandButton value="My Profile"/>
     <br/>
-    <p:commandButton ajax="true" update=":bodyForm" action="#{carController.prepareCreate}" value="#{bundle.ListCarCreateLink}"/>
-    <br/>
-    <p:commandButton ajax="true" update=":bodyForm" action="#{carController.prepareList}" value="#{bundle.CreateCarShowAllLink}" immediate="true"/>
-
+    <p:commandButton action="#{carController.prepareCreate}" value="#{bundle.ListCarCreateLink}" ajax="false"/>
+    <br />
+    <p:commandButton action="#{carController.prepareList}" value="#{bundle.CreateCarShowAllLink}" ajax="false"/>
     <br/>
     <p:commandButton value="Log Out"/>
-
-
 </html>
 

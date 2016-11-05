@@ -19,6 +19,11 @@
             </h:panelGroup>
             <h:form>
                 <p:panelGrid columns="2">
+                    <f:facet name="header">
+                        <p:row>
+                            <p:column>Car informations</p:column>
+                        </p:row>
+                    </f:facet>
                     <h:outputText value="#{bundle.ViewCarLabel_type}"/>
                     <h:outputText value="#{carController.selected.type}" title="#{bundle.ViewCarTitle_type}"/>
                     <h:outputText value="#{bundle.ViewCarLabel_brand}"/>
@@ -35,18 +40,10 @@
                     <h:outputText value="#{carController.selected.id}" title="#{bundle.ViewCarTitle_id}"/>
                 </p:panelGrid>
                 <br />
-                <p:commandButton action="#{carController.destroyAndView}" value="#{bundle.ViewCarDestroyLink}"/>
+                <p:commandButton ajax="true" update=":bodyForm" action="#{carController.destroyAndView}" value="#{bundle.ViewCarDestroyLink}"/>
                 <br />
                 <br />
-                <p:button outcome="Edit" value="#{bundle.ViewCarEditLink}"/>
-                <br />
-                <p:commandButton action="#{carController.prepareCreate}" value="#{bundle.ViewCarCreateLink}" />
-                <br />
-                <p:commandButton action="#{carController.prepareList}" value="#{bundle.ViewCarShowAllLink}"/>
-                <br />
-                <br />
-                <p:button outcome="/index" value="#{bundle.ViewCarIndexLink}"/>
-
+                <p:commandButton ajax="true" update=":bodyForm" action="#{carController.prepareEdit(carController.selected)}" value="#{bundle.ListCarEditLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

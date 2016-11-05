@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -87,7 +88,7 @@ public class CarController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success","Car model " + current.getModel() + " successful added");
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Car " + current.getBrand() + " " + current.getModel() + " successful added");
             FacesContext.getCurrentInstance().addMessage(null, msg);
             return prepareCreate();
         } catch (Exception e) {
@@ -102,12 +103,22 @@ public class CarController implements Serializable {
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
+    
+    public String prepareEdit(Car item) {
+        //current = (Car) getItems().getRowData();
+        current = item;
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        return "Edit";
+    }
 
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CarUpdated"));
-            return "View";
+            //JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CarUpdated"));
+            //return "View";
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Car " + current.getBrand() + " " + current.getModel() + " modified");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            return "/car/List";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
