@@ -34,11 +34,13 @@
                     <p:inputText id="maxPassengers" value="#{carController.selected.maxPassengers}" title="#{bundle.CreateCarTitle_maxPassengers}" />
                     <h:outputLabel value="#{bundle.CreateCarLabel_maxSpeed}" for="maxSpeed" />
                     <p:inputText id="maxSpeed" value="#{carController.selected.maxSpeed}" title="#{bundle.CreateCarTitle_maxSpeed}" />
+                    <h:outputText value="Air Conditioner" />
+                    <p:selectBooleanCheckbox value="#{carController.selected.airConditioner}" />
+                    <h:outputText value="Automatic Transmission" />
+                    <p:selectBooleanCheckbox value="#{carController.selected.automaticTransmission}" />
                 </p:panelGrid>
                 <br />
                 <p:commandButton action="#{carController.create}" value="#{bundle.CreateCarSaveLink}" ajax="false" />
-                <br />
-                <p:button outcome="/index" value="#{bundle.CreateCarIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

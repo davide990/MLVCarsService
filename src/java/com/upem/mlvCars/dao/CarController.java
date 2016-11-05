@@ -103,7 +103,7 @@ public class CarController implements Serializable {
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
-    
+
     public String prepareEdit(Car item) {
         //current = (Car) getItems().getRowData();
         current = item;
@@ -114,13 +114,13 @@ public class CarController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            //JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CarUpdated"));
-            //return "View";
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Car " + current.getBrand() + " " + current.getModel() + " modified");
             FacesContext.getCurrentInstance().addMessage(null, msg);
-            return "/car/List";
+            return "View";
+            //return "/car/List";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Car " + current.getBrand() + " " + current.getModel() + " cannot be updated.");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
             return null;
         }
     }
@@ -150,9 +150,12 @@ public class CarController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CarDeleted"));
+
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Car " + current.getBrand() + " " + current.getModel() + " deleted");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Car " + current.getBrand() + " " + current.getModel() + " cannot be deleted");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
 

@@ -14,9 +14,7 @@
             <ui:include src="leftBar.xhtml"/>
         </ui:define>
         <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
+            <p:growl id="growl" showDetail="true" sticky="true" />
             <h:form>
                 <p:panelGrid columns="2">
                     <f:facet name="header">
@@ -24,6 +22,8 @@
                             <p:column>Car informations</p:column>
                         </p:row>
                     </f:facet>
+                    <h:outputText value="#{bundle.ViewCarLabel_id}"/>
+                    <h:outputText value="#{carController.selected.id}" title="#{bundle.ViewCarTitle_id}"/>
                     <h:outputText value="#{bundle.ViewCarLabel_type}"/>
                     <h:outputText value="#{carController.selected.type}" title="#{bundle.ViewCarTitle_type}"/>
                     <h:outputText value="#{bundle.ViewCarLabel_brand}"/>
@@ -36,8 +36,10 @@
                     <h:outputText value="#{carController.selected.maxPassengers}" title="#{bundle.ViewCarTitle_maxPassengers}"/>
                     <h:outputText value="#{bundle.ViewCarLabel_maxSpeed}"/>
                     <h:outputText value="#{carController.selected.maxSpeed}" title="#{bundle.ViewCarTitle_maxSpeed}"/>
-                    <h:outputText value="#{bundle.ViewCarLabel_id}"/>
-                    <h:outputText value="#{carController.selected.id}" title="#{bundle.ViewCarTitle_id}"/>
+                    <h:outputText value="Air Conditioner" />
+                    <h:outputText value="#{carController.selected.airConditioner}" />
+                    <h:outputText value="Automatic Transmission" />
+                    <h:outputText value="#{carController.selected.automaticTransmission}" />
                 </p:panelGrid>
                 <br />
                 <p:commandButton ajax="true" update=":bodyForm" action="#{carController.destroyAndView}" value="#{bundle.ViewCarDestroyLink}"/>

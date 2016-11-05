@@ -31,6 +31,10 @@
                     <p:inputText id="maxPassengers" value="#{carController.selected.maxPassengers}" title="#{bundle.EditCarTitle_maxPassengers}" />
                     <h:outputLabel value="#{bundle.EditCarLabel_maxSpeed}" for="maxSpeed" />
                     <p:inputText id="maxSpeed" value="#{carController.selected.maxSpeed}" title="#{bundle.EditCarTitle_maxSpeed}" />
+                    <h:outputText value="Air Conditioner" />
+                    <p:selectBooleanCheckbox value="#{carController.selected.airConditioner}" />
+                    <h:outputText value="Automatic Transmission" />
+                    <p:selectBooleanCheckbox value="#{carController.selected.automaticTransmission}" />
                 </p:panelGrid>
                 <p:commandButton ajax="false" action="#{carController.update}" value="#{bundle.EditCarSaveLink}"/>
                 <br />

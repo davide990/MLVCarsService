@@ -67,7 +67,7 @@ public class Car extends Vehicle {
         this.airConditioner = airConditioner;
     }
 
-    public boolean hasAutomaticTransmission() {
+    public boolean isAutomaticTransmission() {
         return automaticTransmission;
     }
 

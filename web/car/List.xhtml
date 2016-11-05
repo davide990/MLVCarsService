@@ -15,15 +15,19 @@
         </ui:define>
         <ui:define name="body">
             <h:form>
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
+                <p:growl id="growl" showDetail="true" sticky="true" />
                 <h:outputText escape="false" value="#{bundle.ListCarEmpty}" rendered="#{carController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{carController.items.rowCount > 0}">
                     <h:outputText value="#{carController.pagination.pageFirstItem + 1}..#{carController.pagination.pageLastItem + 1}/#{carController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{carController.previous}" value="#{bundle.Previous} #{carController.pagination.pageSize}" rendered="#{carController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{carController.next}" value="#{bundle.Next} #{carController.pagination.pageSize}" rendered="#{carController.pagination.hasNextPage}"/>&nbsp;
                     <p:dataTable value="#{carController.items}" var="item" style="border:solid 1px">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCarTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCarTitle_type}"/>
@@ -62,9 +66,15 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCarTitle_id}"/>
+                                <h:outputText value="Air Conditioner"/>
                             </f:facet>
-                            <h:outputText value="#{item.id}"/>
+                            <h:outputText value="#{item.airConditioner}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Automatic Transmission"/>
+                            </f:facet>
+                            <h:outputText value="#{item.automaticTransmission}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
