@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/template.xhtml">
@@ -14,29 +15,28 @@
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundleRental.EditRentalLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{rentalController.selected.id}" title="#{bundleRental.EditRentalTitle_id}" required="true" requiredMessage="#{bundleRental.EditRentalRequiredMessage_id}"/>
+                <p:panelGrid columns="2">
                     <h:outputLabel value="#{bundleRental.EditRentalLabel_car}" for="car" />
-                    <h:inputText id="car" value="#{rentalController.selected.car}" title="#{bundleRental.EditRentalTitle_car}" />
+                    <p:selectOneMenu id="car" value="#{rentalController.selected.car}" converter="carConverter" panelStyle="width:180px"
+                                     effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{rentalController.avaibleCar}" var="car" itemLabel="#{car.brand} #{car.model}" itemValue="#{car}" />
+                        <p:column>
+                            <h:outputText value="#{t.brand} #{t.model} (ID ##{t.id})" />
+                        </p:column>
+                    </p:selectOneMenu>
                     <h:outputLabel value="#{bundleRental.EditRentalLabel_rentalStart}" for="rentalStart" />
-                    <h:inputText id="rentalStart" value="#{rentalController.selected.rentalStart}" title="#{bundleRental.EditRentalTitle_rentalStart}" />
+                    <p:calendar  id="rentalStart" value="#{rentalController.selected.rentalStart}" showOn="button" title="#{bundleRental.EditRentalTitle_rentalStart}"/>
                     <h:outputLabel value="#{bundleRental.EditRentalLabel_rentalEnd}" for="rentalEnd" />
-                    <h:inputText id="rentalEnd" value="#{rentalController.selected.rentalEnd}" title="#{bundleRental.EditRentalTitle_rentalEnd}" />
+                    <p:calendar  id="rentalEnd" value="#{rentalController.selected.rentalEnd}" showOn="button" title="#{bundleRental.EditRentalTitle_rentalEnd}"/>
                     <h:outputLabel value="#{bundleRental.EditRentalLabel_rentalPrice}" for="rentalPrice" />
-                    <h:inputText id="rentalPrice" value="#{rentalController.selected.rentalPrice}" title="#{bundleRental.EditRentalTitle_rentalPrice}" />
+                    <p:spinner id="rentalPrice" value="#{rentalController.selected.rentalPrice}" title="#{bundleRental.EditRentalTitle_rentalPrice}" prefix="€" min="0" max="10000" />
                     <h:outputLabel value="#{bundleRental.EditRentalLabel_client_id}" for="client_id" />
                     <h:inputText id="client_id" value="#{rentalController.selected.client_id}" title="#{bundleRental.EditRentalTitle_client_id}" />
-                </h:panelGrid>
-                <h:commandLink action="#{rentalController.update}" value="#{bundleRental.EditRentalSaveLink}"/>
+                </p:panelGrid>
+                <p:commandButton ajax="false" action="#{rentalController.update}" value="#{bundleRental.EditRentalSaveLink}"/>
                 <br />
                 <br />
-                <h:link outcome="View" value="#{bundleRental.EditRentalViewLink}"/>
-                <br />
-                <h:commandLink action="#{rentalController.prepareList}" value="#{bundleRental.EditRentalShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundleRental.EditRentalIndexLink}" />
+                <p:button outcome="View" value="#{bundleRental.EditRentalViewLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
