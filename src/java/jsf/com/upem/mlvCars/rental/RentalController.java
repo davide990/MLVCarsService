@@ -141,6 +141,16 @@ public class RentalController implements Serializable {
         return carFacade.findAll();
     }
     
+    public String getCarBrand(int carID)
+    {
+        return carFacade.find(carID).getBrand();
+    }
+    
+    public String getCarModel(int carID)
+    {
+        return carFacade.find(carID).getModel();
+    }
+    
     
     public String update() {
         try {

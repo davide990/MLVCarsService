@@ -3,18 +3,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
             <h:outputText value="#{bundleRental.ViewRentalTitle}"></h:outputText>
         </ui:define>
+        <ui:define name="leftBar">
+            <ui:include src="leftBar.xhtml"/>
+        </ui:define>
         <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
+            <p:growl id="growl" showDetail="true" sticky="true" />
             <h:form>
-                <h:panelGrid columns="2">
+                <p:panelGrid columns="2">
+                    <f:facet name="header">
+                        <p:row>
+                            <p:column>Rental informations</p:column>
+                        </p:row>
+                    </f:facet>
                     <h:outputText value="#{bundleRental.ViewRentalLabel_id}"/>
                     <h:outputText value="#{rentalController.selected.id}" title="#{bundleRental.ViewRentalTitle_id}"/>
                     <h:outputText value="#{bundleRental.ViewRentalLabel_car}"/>
@@ -27,20 +34,12 @@
                     <h:outputText value="#{rentalController.selected.rentalPrice}" title="#{bundleRental.ViewRentalTitle_rentalPrice}"/>
                     <h:outputText value="#{bundleRental.ViewRentalLabel_client_id}"/>
                     <h:outputText value="#{rentalController.selected.client_id}" title="#{bundleRental.ViewRentalTitle_client_id}"/>
-                </h:panelGrid>
+                </p:panelGrid>
                 <br />
-                <h:commandLink action="#{rentalController.destroyAndView}" value="#{bundleRental.ViewRentalDestroyLink}"/>
-                <br />
-                <br />
-                <h:link outcome="Edit" value="#{bundleRental.ViewRentalEditLink}"/>
-                <br />
-                <h:commandLink action="#{rentalController.prepareCreate}" value="#{bundleRental.ViewRentalCreateLink}" />
-                <br />
-                <h:commandLink action="#{rentalController.prepareList}" value="#{bundleRental.ViewRentalShowAllLink}"/>
+                <p:commandButton ajax="true" update=":bodyForm" action="#{rentalController.destroyAndView}" value="#{bundleRental.ViewRentalDestroyLink}"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{bundleRental.ViewRentalIndexLink}"/>
-
+                <p:commandButton ajax="true" update=":bodyForm" action="#{rentalController.prepareEdit(rentalController.selected)}" value="#{bundleRental.ListRentalEditLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

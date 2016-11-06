@@ -38,13 +38,7 @@ public class mlvRentalDAO {
             - Attach the object to the entity manager.
          */
         logger.log(Level.INFO, "Adding rental ID: " + rental.getId());
-        if (!em.contains(rental)) {
-            em.persist(rental);
-            return;
-        }
-
-        em.merge(rental);
-
+        em.persist(rental);
     }
 
     public void updateRental(Rental rental) {
