@@ -1,6 +1,7 @@
 package com.upem.mlvCars.model;
 
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -83,4 +84,48 @@ public class Car extends Vehicle {
         this.purchaseDate = purchaseDate;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.type);
+        hash = 59 * hash + Objects.hashCode(this.brand);
+        hash = 59 * hash + Objects.hashCode(this.model);
+        hash = 59 * hash + (this.airConditioner ? 1 : 0);
+        hash = 59 * hash + (this.automaticTransmission ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.purchaseDate);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Car other = (Car) obj;
+        if (this.airConditioner != other.airConditioner) {
+            return false;
+        }
+        if (this.automaticTransmission != other.automaticTransmission) {
+            return false;
+        }
+        if (!Objects.equals(this.brand, other.brand)) {
+            return false;
+        }
+        if (!Objects.equals(this.model, other.model)) {
+            return false;
+        }
+        if (this.type != other.type) {
+            return false;
+        }
+        return Objects.equals(this.purchaseDate, other.purchaseDate);
+    }
+
+    
+    
 }

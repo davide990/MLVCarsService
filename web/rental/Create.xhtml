@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleRental.CreateRentalTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="leftBar">
+            <ui:include src="leftBar.xhtml"/>
+        </ui:define>
+        <ui:define name="body">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <h:form>
+                <p:panelGrid columns="2">
+                    <h:outputLabel value="#{bundleRental.CreateRentalLabel_car}" for="car" />
+                    <p:selectOneMenu id="advanced" value="#{rentalController.selected.car}" converter="carConverter" panelStyle="width:180px"
+                                     effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{rentalController.avaibleCar}" var="car" itemLabel="#{car.brand} #{car.model}" itemValue="#{car}" />
+                        <p:column>
+                            <h:outputText value="#{t.brand} #{t.model} (ID ##{t.id})" />
+                        </p:column>
+                    </p:selectOneMenu>
+                    <h:outputLabel value="#{bundleRental.CreateRentalLabel_rentalStart}" for="rentalStart" />
+                    <p:calendar  id="rentalStart" value="#{rentalController.selected.rentalStart}" showOn="button" title="#{bundleRental.CreateRentalTitle_rentalStart}"/>
+                    <h:outputLabel value="#{bundleRental.CreateRentalLabel_rentalEnd}" for="rentalEnd" />
+                    <p:calendar  id="rentalEnd" value="#{rentalController.selected.rentalEnd}" showOn="button" title="#{bundleRental.CreateRentalTitle_rentalEnd}"/>
+                    <h:outputLabel value="#{bundleRental.CreateRentalLabel_rentalPrice}" for="rentalPrice" />
+                    <p:spinner id="rentalPrice" value="#{rentalController.selected.rentalPrice}" title="#{bundleRental.CreateRentalTitle_rentalPrice}" prefix="€" min="0" max="10000" />
+                    <h:outputLabel value="#{bundleRental.CreateRentalLabel_client_id}" for="client_id" />
+                    <h:inputText id="client_id" value="#{rentalController.selected.client_id}" title="#{bundleRental.CreateRentalTitle_client_id}" />
+                </p:panelGrid>
+                <br />
+                <p:commandButton action="#{rentalController.create}" value="#{bundleRental.CreateRentalSaveLink}" ajax="false" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

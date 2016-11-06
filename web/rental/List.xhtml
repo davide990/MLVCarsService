@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleRental.ListRentalTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="leftBar">
+            <ui:include src="leftBar.xhtml"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <p:growl id="growl" showDetail="true" sticky="true" />
+                <h:outputText escape="false" value="#{bundleRental.ListRentalEmpty}" rendered="#{rentalController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{rentalController.items.rowCount > 0}">
+                    <h:outputText value="#{rentalController.pagination.pageFirstItem + 1}..#{rentalController.pagination.pageLastItem + 1}/#{rentalController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{rentalController.previous}" value="#{bundleRental.Previous} #{rentalController.pagination.pageSize}" rendered="#{rentalController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{rentalController.next}" value="#{bundleRental.Next} #{rentalController.pagination.pageSize}" rendered="#{rentalController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{rentalController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleRental.ListRentalTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleRental.ListRentalTitle_car}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.car}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleRental.ListRentalTitle_rentalStart}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rentalStart}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleRental.ListRentalTitle_rentalEnd}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rentalEnd}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleRental.ListRentalTitle_rentalPrice}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rentalPrice}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleRental.ListRentalTitle_client_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.client_id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{rentalController.prepareView}" value="#{bundleRental.ListRentalViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{rentalController.prepareEdit}" value="#{bundleRental.ListRentalEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{rentalController.destroy}" value="#{bundleRental.ListRentalDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{rentalController.prepareCreate}" value="#{bundleRental.ListRentalCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundleRental.ListRentalIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

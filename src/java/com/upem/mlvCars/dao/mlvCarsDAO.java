@@ -29,7 +29,13 @@ public class mlvCarsDAO {
             - Attach the object to the entity manager.
          */
         logger.log(Level.INFO, "Adding vehicle ID: " + v.getId());
-        em.persist(v);
+
+        if (!em.contains(v)) {
+            em.persist(v);
+            return;
+        }
+
+        em.merge(v);
     }
 
     public void updateVehicle(Vehicle v) {

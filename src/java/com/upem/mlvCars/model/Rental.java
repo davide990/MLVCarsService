@@ -13,7 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -33,13 +35,15 @@ public class Rental implements Serializable {
     @Column(name = "rental_id")
     private long id;
 
-    @Column(name = "car")
+    @ManyToOne
     private Car car;
 
     @Column(name = "rentalStart")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date rentalStart;
 
     @Column(name = "rentalEnd")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date rentalEnd;
 
     @Column(name = "rentalPrice")

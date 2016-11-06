@@ -1,16 +1,21 @@
-package com.upem.mlvCars.dao;
+package jsf.com.upem.mlvCars.rental;
 
+import com.upem.mlvCars.dao.CarFacade;
 import com.upem.mlvCars.model.Car;
-import com.upem.mlvCars.dao.util.JsfUtil;
-import com.upem.mlvCars.dao.util.PaginationHelper;
-import com.upem.mlvCars.model.CarType;
+import com.upem.mlvCars.model.Rental;
+import jsf.com.upem.mlvCars.rental.util.JsfUtil;
+import jsf.com.upem.mlvCars.rental.util.PaginationHelper;
+import jpa.com.upem.mlvCars.rental.RentalFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
+import javax.faces.component.UIComponent;   
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
@@ -18,33 +23,54 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("carController")
+@Named("rentalController")
 @SessionScoped
-public class CarController implements Serializable {
+public class RentalController implements Serializable {
 
-    private Car current;
+    private Rental current;
     private DataModel items = null;
     @EJB
-    private com.upem.mlvCars.dao.CarFacade ejbFacade;
+    private jpa.com.upem.mlvCars.rental.RentalFacade ejbFacade;
+    
+    private Car selectedCar;
+
+    private List<Car> avaibleCar;
+    
+    @EJB
+    private CarFacade carFacade;
+    
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public CarController() {
+    public RentalController() {
     }
 
-    public CarType[] getCarTypes() {
-        return CarType.values();
-    }
-
-    public Car getSelected() {
+    public Rental getSelected() {
         if (current == null) {
-            current = new Car();
+            current = new Rental();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private CarFacade getFacade() {
+    public List<Car> getAvaibleCar() {
+        return avaibleCar;
+    }
+
+    public void setAvaibleCar(List<Car> avaibleCar) {
+        this.avaibleCar = avaibleCar;
+    }
+    
+    public Car getSelectedCar() {
+        return selectedCar;
+    }
+
+    public void setSelectedCar(Car selectedCar) {
+        this.selectedCar = selectedCar;
+    }
+    
+    
+    private RentalFacade getFacade() {
         return ejbFacade;
     }
 
@@ -72,13 +98,15 @@ public class CarController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Car) getItems().getRowData();
+        current = (Rental) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Car();
+        current = new Rental();
+        selectedCar = new Car();
+        avaibleCar = carFacade.findAll();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -86,45 +114,49 @@ public class CarController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Car " + current.getBrand() + " " + current.getModel() + " successful added");
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Rental successful added");
             FacesContext.getCurrentInstance().addMessage(null, msg);
             return prepareCreate();
         } catch (Exception e) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Cannot add car " + current.getModel() + ".\nPlease check your input!\n(Error: " + e + ")");
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Rental cannot be added");
             FacesContext.getCurrentInstance().addMessage(null, msg);
             return null;
         }
     }
 
     public String prepareEdit() {
-        current = (Car) getItems().getRowData();
+        current = (Rental) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
-
-    public String prepareEdit(Car item) {
-        //current = (Car) getItems().getRowData();
+    
+    public String prepareEdit(Rental item) {
         current = item;
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
-
+    
+    public List<Car> getAvaibleCars()
+    {
+        return carFacade.findAll();
+    }
+    
+    
     public String update() {
         try {
             getFacade().edit(current);
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Car " + current.getBrand() + " " + current.getModel() + " modified");
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Rental successful updated");
             FacesContext.getCurrentInstance().addMessage(null, msg);
             return "View";
-            //return "/car/List";
         } catch (Exception e) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Car " + current.getBrand() + " " + current.getModel() + " cannot be updated.");
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Rental cannot be updated");
             FacesContext.getCurrentInstance().addMessage(null, msg);
             return null;
         }
     }
 
     public String destroy() {
-        current = (Car) getItems().getRowData();
+        current = (Rental) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -148,11 +180,10 @@ public class CarController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Car " + current.getBrand() + " " + current.getModel() + " deleted");
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Rental successful deleted");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } catch (Exception e) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Car " + current.getBrand() + " " + current.getModel() + " cannot be deleted");
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Rental cannot be deleted");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
@@ -207,30 +238,30 @@ public class CarController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public Car getCar(int id) {
+    public Rental getRental(long id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Car.class)
-    public static class CarControllerConverter implements Converter {
+    @FacesConverter(forClass = Rental.class)
+    public static class RentalControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CarController controller = (CarController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "carController");
-            return controller.getCar(getKey(value));
+            RentalController controller = (RentalController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "rentalController");
+            return controller.getRental(getKey(value));
         }
 
-        int getKey(String value) {
-            int key;
-            key = Integer.parseInt(value);
+        long getKey(String value) {
+            long key;
+            key = Long.parseLong(value);
             return key;
         }
 
-        String getStringKey(int value) {
+        String getStringKey(long value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -241,11 +272,11 @@ public class CarController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Car) {
-                Car o = (Car) object;
+            if (object instanceof Rental) {
+                Rental o = (Rental) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Car.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Rental.class.getName());
             }
         }
 
