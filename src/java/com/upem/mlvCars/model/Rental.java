@@ -51,6 +51,39 @@ public class Rental implements Serializable {
 
     @Column(name = "clientId")
     private long client_id;
+    
+    @Column(name = "carStatusBeforeRental")
+    private String carStatusBeforeRental;
+    
+    @Column(name = "carStatusAfterRental")
+    private String carStatusAfterRental;
+    
+    @Column(name = "userComment")
+    private String userComment;
+    
+    public String getCarStatusBeforeRental() {
+        return carStatusBeforeRental;
+    }
+
+    public void setCarStatusBeforeRental(String carStatusBeforeRental) {
+        this.carStatusBeforeRental = carStatusBeforeRental;
+    }
+
+    public String getCarStatusAfterRental() {
+        return carStatusAfterRental;
+    }
+
+    public void setCarStatusAfterRental(String carStatusAfterRental) {
+        this.carStatusAfterRental = carStatusAfterRental;
+    }
+
+    public String getUserComment() {
+        return userComment;
+    }
+
+    public void setUserComment(String userComment) {
+        this.userComment = userComment;
+    }
 
     public long getId() {
         return id;

@@ -52,6 +52,26 @@
                             </f:facet>
                             <h:outputText value="#{item.rentalPrice}"/>
                         </p:column>
+                        <!--  -->
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleRental.ListRentalTitle_carStatusBeforeRental}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.carStatusBeforeRental}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleRental.ListRentalTitle_carStatusAfterRental}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.carStatusAfterRental}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleRental.ListRentalTitle_userComment}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.userComment}"/>
+                        </p:column>
+                        <!--  -->
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundleRental.ListRentalTitle_client_id}"/>

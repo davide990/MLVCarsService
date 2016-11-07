@@ -31,6 +31,12 @@
                     <p:calendar  id="rentalEnd" value="#{rentalController.selected.rentalEnd}" showOn="button" title="#{bundleRental.EditRentalTitle_rentalEnd}"/>
                     <h:outputLabel value="#{bundleRental.EditRentalLabel_rentalPrice}" for="rentalPrice" />
                     <p:spinner id="rentalPrice" value="#{rentalController.selected.rentalPrice}" title="#{bundleRental.EditRentalTitle_rentalPrice}" prefix="€" min="0" max="10000" />
+                    <h:outputLabel value="#{bundleRental.EditRentalLabel_carStatusBeforeRental}" for="carStatusBeforeRental" />
+                    <p:inputText id="carStatusBeforeRental" value="#{rentalController.selected.carStatusBeforeRental}" title="#{bundleRental.EditRentalTitle_carStatusBeforeRental}"/>
+                    <h:outputLabel value="#{bundleRental.EditRentalLabel_carStatusAfterRental}" for="carStatusAfterRental" />
+                    <p:inputText id="carStatusAfterRental" value="#{rentalController.selected.carStatusAfterRental}" title="#{bundleRental.EditRentalTitle_carStatusAfterRental}"/>
+                    <h:outputLabel value="#{bundleRental.EditRentalLabel_userComment}" for="userComment" />
+                    <p:inputText id="userComment" value="#{rentalController.selected.userComment}" title="#{bundleRental.EditRentalTitle_userComment}"/>
                     <h:outputLabel value="#{bundleRental.EditRentalLabel_client_id}" for="client_id" />
                     <p:selectOneMenu id="client_id" value="#{rentalController.selectedUser}" converter="personConverter" panelStyle="width:180px"
                                      effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="startsWith">
