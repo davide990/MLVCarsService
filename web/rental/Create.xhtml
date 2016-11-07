@@ -32,7 +32,14 @@
                     <h:outputLabel value="#{bundleRental.CreateRentalLabel_rentalPrice}" for="rentalPrice" />
                     <p:spinner id="rentalPrice" value="#{rentalController.selected.rentalPrice}" title="#{bundleRental.CreateRentalTitle_rentalPrice}" prefix="€" min="0" max="10000" />
                     <h:outputLabel value="#{bundleRental.CreateRentalLabel_client_id}" for="client_id" />
-                    <h:inputText id="client_id" value="#{rentalController.selected.client_id}" title="#{bundleRental.CreateRentalTitle_client_id}" />
+                    <p:selectOneMenu id="studentsAndTeachers" value="#{rentalController.selectedUser}" converter="personConverter" panelStyle="width:180px"
+                                     effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{rentalController.mlvUsers}" var="person" itemLabel="#{person.lastName} #{person.firstName}" itemValue="#{person}" />
+                        <p:column>
+                            <h:outputText value="#{t.lastName} #{t.firstName} (ID ##{t.id})" />
+                        </p:column>
+                    </p:selectOneMenu>
+
                 </p:panelGrid>
                 <br />
                 <p:commandButton action="#{rentalController.create}" value="#{bundleRental.CreateRentalSaveLink}" ajax="false" />

@@ -1,0 +1,257 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.users.upem.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="StudentService" targetNamespace="http://service.users.upem.com/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.users.upem.com/" elementFormDefault="unqualified" targetNamespace="http://service.users.upem.com/" version="1.0">
+
+  <xs:element name="createStudent" type="tns:createStudent"/>
+
+  <xs:element name="deleteStudent" type="tns:deleteStudent"/>
+
+  <xs:element name="existsStudent" type="tns:existsStudent"/>
+
+  <xs:element name="existsStudentResponse" type="tns:existsStudentResponse"/>
+
+  <xs:element name="getAllStudents" type="tns:getAllStudents"/>
+
+  <xs:element name="getAllStudentsResponse" type="tns:getAllStudentsResponse"/>
+
+  <xs:element name="getStudentByEmail" type="tns:getStudentByEmail"/>
+
+  <xs:element name="getStudentByEmailResponse" type="tns:getStudentByEmailResponse"/>
+
+  <xs:element name="getStudentByID" type="tns:getStudentByID"/>
+
+  <xs:element name="getStudentByIDResponse" type="tns:getStudentByIDResponse"/>
+
+  <xs:element name="student" type="tns:student"/>
+
+  <xs:element name="updateStudent" type="tns:updateStudent"/>
+
+  <xs:complexType name="getAllStudents">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getAllStudentsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:student"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="student">
+    <xs:complexContent>
+      <xs:extension base="tns:person">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="person">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="birth_date" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="first_name" type="xs:string"/>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element minOccurs="0" name="last_name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateStudent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="student" type="tns:student"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getStudentByID">
+    <xs:sequence>
+      <xs:element name="student_id" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getStudentByIDResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:student"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="existsStudent">
+    <xs:sequence>
+      <xs:element name="student_id" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="existsStudentResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getStudentByEmail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getStudentByEmailResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:student"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createStudent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="student" type="tns:student"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="deleteStudent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="student" type="tns:student"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getAllStudents">
+    <wsdl:part element="tns:getAllStudents" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateStudent">
+    <wsdl:part element="tns:updateStudent" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="existsStudentResponse">
+    <wsdl:part element="tns:existsStudentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStudentByID">
+    <wsdl:part element="tns:getStudentByID" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="existsStudent">
+    <wsdl:part element="tns:existsStudent" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStudentByEmail">
+    <wsdl:part element="tns:getStudentByEmail" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllStudentsResponse">
+    <wsdl:part element="tns:getAllStudentsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStudentByIDResponse">
+    <wsdl:part element="tns:getStudentByIDResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStudentByEmailResponse">
+    <wsdl:part element="tns:getStudentByEmailResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createStudent">
+    <wsdl:part element="tns:createStudent" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteStudent">
+    <wsdl:part element="tns:deleteStudent" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="StudentService">
+    <wsdl:operation name="getAllStudents">
+      <wsdl:input message="tns:getAllStudents" name="getAllStudents">
+    </wsdl:input>
+      <wsdl:output message="tns:getAllStudentsResponse" name="getAllStudentsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateStudent">
+      <wsdl:input message="tns:updateStudent" name="updateStudent">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="getStudentByID">
+      <wsdl:input message="tns:getStudentByID" name="getStudentByID">
+    </wsdl:input>
+      <wsdl:output message="tns:getStudentByIDResponse" name="getStudentByIDResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="existsStudent">
+      <wsdl:input message="tns:existsStudent" name="existsStudent">
+    </wsdl:input>
+      <wsdl:output message="tns:existsStudentResponse" name="existsStudentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStudentByEmail">
+      <wsdl:input message="tns:getStudentByEmail" name="getStudentByEmail">
+    </wsdl:input>
+      <wsdl:output message="tns:getStudentByEmailResponse" name="getStudentByEmailResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createStudent">
+      <wsdl:input message="tns:createStudent" name="createStudent">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="deleteStudent">
+      <wsdl:input message="tns:deleteStudent" name="deleteStudent">
+    </wsdl:input>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="StudentServiceSoapBinding" type="tns:StudentService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getAllStudents">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAllStudents">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllStudentsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateStudent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateStudent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="getStudentByID">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getStudentByID">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getStudentByIDResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="existsStudent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="existsStudent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="existsStudentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStudentByEmail">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getStudentByEmail">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getStudentByEmailResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createStudent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createStudent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="deleteStudent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteStudent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="StudentService">
+    <wsdl:port binding="tns:StudentServiceSoapBinding" name="StudentServicePort">
+      <soap:address location="http://localhost:8080/MlvUsers/StudentService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

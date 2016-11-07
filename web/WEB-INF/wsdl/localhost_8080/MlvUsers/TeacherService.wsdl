@@ -1,0 +1,257 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.users.upem.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="TeacherService" targetNamespace="http://service.users.upem.com/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.users.upem.com/" elementFormDefault="unqualified" targetNamespace="http://service.users.upem.com/" version="1.0">
+
+  <xs:element name="createTeacher" type="tns:createTeacher"/>
+
+  <xs:element name="deleteTeacher" type="tns:deleteTeacher"/>
+
+  <xs:element name="existsTeacher" type="tns:existsTeacher"/>
+
+  <xs:element name="existsTeacherResponse" type="tns:existsTeacherResponse"/>
+
+  <xs:element name="getAllTeachers" type="tns:getAllTeachers"/>
+
+  <xs:element name="getAllTeachersResponse" type="tns:getAllTeachersResponse"/>
+
+  <xs:element name="getTeacherByEmail" type="tns:getTeacherByEmail"/>
+
+  <xs:element name="getTeacherByEmailResponse" type="tns:getTeacherByEmailResponse"/>
+
+  <xs:element name="getTeacherByID" type="tns:getTeacherByID"/>
+
+  <xs:element name="getTeacherByIDResponse" type="tns:getTeacherByIDResponse"/>
+
+  <xs:element name="teacher" type="tns:teacher"/>
+
+  <xs:element name="updateTeacher" type="tns:updateTeacher"/>
+
+  <xs:complexType name="getAllTeachers">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getAllTeachersResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:teacher"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="teacher">
+    <xs:complexContent>
+      <xs:extension base="tns:person">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="person">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="birth_date" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="first_name" type="xs:string"/>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element minOccurs="0" name="last_name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getTeacherByID">
+    <xs:sequence>
+      <xs:element name="teacher_id" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getTeacherByIDResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:teacher"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getTeacherByEmail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getTeacherByEmailResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:teacher"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="existsTeacher">
+    <xs:sequence>
+      <xs:element name="teacher_id" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="existsTeacherResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createTeacher">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="teacher" type="tns:teacher"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateTeacher">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="teacher" type="tns:teacher"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="deleteTeacher">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="teacher" type="tns:teacher"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getAllTeachers">
+    <wsdl:part element="tns:getAllTeachers" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTeacherByID">
+    <wsdl:part element="tns:getTeacherByID" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTeacherByIDResponse">
+    <wsdl:part element="tns:getTeacherByIDResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTeacherByEmail">
+    <wsdl:part element="tns:getTeacherByEmail" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="existsTeacherResponse">
+    <wsdl:part element="tns:existsTeacherResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="existsTeacher">
+    <wsdl:part element="tns:existsTeacher" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTeacherByEmailResponse">
+    <wsdl:part element="tns:getTeacherByEmailResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createTeacher">
+    <wsdl:part element="tns:createTeacher" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateTeacher">
+    <wsdl:part element="tns:updateTeacher" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllTeachersResponse">
+    <wsdl:part element="tns:getAllTeachersResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteTeacher">
+    <wsdl:part element="tns:deleteTeacher" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="TeacherService">
+    <wsdl:operation name="getAllTeachers">
+      <wsdl:input message="tns:getAllTeachers" name="getAllTeachers">
+    </wsdl:input>
+      <wsdl:output message="tns:getAllTeachersResponse" name="getAllTeachersResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTeacherByID">
+      <wsdl:input message="tns:getTeacherByID" name="getTeacherByID">
+    </wsdl:input>
+      <wsdl:output message="tns:getTeacherByIDResponse" name="getTeacherByIDResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTeacherByEmail">
+      <wsdl:input message="tns:getTeacherByEmail" name="getTeacherByEmail">
+    </wsdl:input>
+      <wsdl:output message="tns:getTeacherByEmailResponse" name="getTeacherByEmailResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="existsTeacher">
+      <wsdl:input message="tns:existsTeacher" name="existsTeacher">
+    </wsdl:input>
+      <wsdl:output message="tns:existsTeacherResponse" name="existsTeacherResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createTeacher">
+      <wsdl:input message="tns:createTeacher" name="createTeacher">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="updateTeacher">
+      <wsdl:input message="tns:updateTeacher" name="updateTeacher">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="deleteTeacher">
+      <wsdl:input message="tns:deleteTeacher" name="deleteTeacher">
+    </wsdl:input>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TeacherServiceSoapBinding" type="tns:TeacherService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getAllTeachers">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAllTeachers">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllTeachersResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTeacherByID">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTeacherByID">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTeacherByIDResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTeacherByEmail">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTeacherByEmail">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTeacherByEmailResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="existsTeacher">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="existsTeacher">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="existsTeacherResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createTeacher">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createTeacher">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="updateTeacher">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateTeacher">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="deleteTeacher">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteTeacher">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TeacherService">
+    <wsdl:port binding="tns:TeacherServiceSoapBinding" name="TeacherServicePort">
+      <soap:address location="http://localhost:8080/MlvUsers/TeacherService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

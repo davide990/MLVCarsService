@@ -3,6 +3,13 @@ package jsf.com.upem.mlvCars.rental;
 import com.upem.mlvCars.dao.CarFacade;
 import com.upem.mlvCars.model.Car;
 import com.upem.mlvCars.model.Rental;
+import com.upem.mlvCars.services.client.mlvStudents.Student;
+import com.upem.mlvCars.services.client.mlvStudents.StudentService;
+import com.upem.mlvCars.services.client.mlvStudents.StudentService_Service;
+import com.upem.mlvCars.services.client.mlvTeachers.Teacher;
+import com.upem.mlvCars.services.client.mlvTeachers.TeacherService;
+import com.upem.mlvCars.services.client.mlvTeachers.TeacherService_Service;
+import com.upem.mlvCars.services.client.model.PersonEntity;
 import jsf.com.upem.mlvCars.rental.util.JsfUtil;
 import jsf.com.upem.mlvCars.rental.util.PaginationHelper;
 import jpa.com.upem.mlvCars.rental.RentalFacade;
@@ -10,18 +17,18 @@ import jpa.com.upem.mlvCars.rental.RentalFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;   
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.persistence.NoResultException;
 
 @Named("rentalController")
 @SessionScoped
@@ -31,14 +38,17 @@ public class RentalController implements Serializable {
     private DataModel items = null;
     @EJB
     private jpa.com.upem.mlvCars.rental.RentalFacade ejbFacade;
-    
+
     private Car selectedCar;
 
     private List<Car> avaibleCar;
-    
+
+    private PersonEntity selectedUser;
+    private List<PersonEntity> mlvUsers;
+
     @EJB
     private CarFacade carFacade;
-    
+
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -60,7 +70,23 @@ public class RentalController implements Serializable {
     public void setAvaibleCar(List<Car> avaibleCar) {
         this.avaibleCar = avaibleCar;
     }
-    
+
+    public List<PersonEntity> getMlvUsers() {
+        return mlvUsers;
+    }
+
+    public void setMlvUsers(List<PersonEntity> mlvUsers) {
+        this.mlvUsers = mlvUsers;
+    }
+
+    public PersonEntity getSelectedUser() {
+        return selectedUser;
+    }
+
+    public void setSelectedUser(PersonEntity selectedUser) {
+        this.selectedUser = selectedUser;
+    }
+
     public Car getSelectedCar() {
         return selectedCar;
     }
@@ -68,8 +94,7 @@ public class RentalController implements Serializable {
     public void setSelectedCar(Car selectedCar) {
         this.selectedCar = selectedCar;
     }
-    
-    
+
     private RentalFacade getFacade() {
         return ejbFacade;
     }
@@ -92,6 +117,84 @@ public class RentalController implements Serializable {
         return pagination;
     }
 
+    public List<Student> retrieveMLVStudents() {
+        StudentService_Service sv = new StudentService_Service();
+        StudentService service = sv.getStudentServicePort();
+
+        return service.getAllStudents();
+    }
+
+    public List<Teacher> retrieveMLVTeachers() {
+        TeacherService_Service sv = new TeacherService_Service();
+        TeacherService service = sv.getTeacherServicePort();
+
+        return service.getAllTeachers();
+    }
+
+    public List<PersonEntity> retrieveMLVUsers() {
+        List<PersonEntity> persons = new ArrayList<>();
+
+        retrieveMLVStudents().stream().forEach((s) -> {
+            persons.add(PersonEntity.fromStudent(s));
+        });
+
+        retrieveMLVTeachers().stream().forEach((t) -> {
+            persons.add(PersonEntity.fromTeacher(t));
+        });
+
+        return persons;
+    }
+
+    public String getUserType(PersonEntity o) {
+        StudentService_Service sv = new StudentService_Service();
+        StudentService service = sv.getStudentServicePort();
+        TeacherService_Service sv_t = new TeacherService_Service();
+        TeacherService service_t = sv_t.getTeacherServicePort();
+
+        try {
+            service.getStudentByID(o.getId());
+            return "Student";
+        } catch (NoResultException e) {
+            try {
+                service_t.getTeacherByID(o.getId());
+                return "Teacher";
+            } catch (NoResultException ee) {
+                return "Unknown";
+            }
+        }
+    }
+
+    public PersonEntity retrieveMLVUserByID(long id) {
+        StudentService_Service sv = new StudentService_Service();
+        StudentService service = sv.getStudentServicePort();
+        TeacherService_Service sv_t = new TeacherService_Service();
+        TeacherService service_t = sv_t.getTeacherServicePort();
+
+        try {
+            return PersonEntity.fromStudent(service.getStudentByID(id));
+        } catch (NoResultException e) {
+            try {
+                return PersonEntity.fromTeacher(service_t.getTeacherByID(id));
+            } catch (NoResultException ee) {
+                return null;
+            }
+        }
+    }
+
+    public Student retrieveMLVStudentByID(long studentID) {
+        StudentService_Service sv = new StudentService_Service();
+        StudentService service = sv.getStudentServicePort();
+
+        return service.getStudentByID(studentID);
+    }
+
+    public Student retrieveMLVStudentByEmail(String email) {
+        StudentService_Service sv = new StudentService_Service();
+        StudentService service = sv.getStudentServicePort();
+
+        return service.getStudentByEmail(email);
+    }
+
     public String prepareList() {
         recreateModel();
         return "List";
@@ -107,12 +210,15 @@ public class RentalController implements Serializable {
         current = new Rental();
         selectedCar = new Car();
         avaibleCar = carFacade.findAll();
+        mlvUsers = retrieveMLVUsers();
+
         selectedItemIndex = -1;
         return "Create";
     }
 
     public String create() {
         try {
+            current.setClient_id(selectedUser.getId());
             getFacade().create(current);
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Rental successful added");
             FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -129,29 +235,25 @@ public class RentalController implements Serializable {
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
-    
+
     public String prepareEdit(Rental item) {
         current = item;
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
-    
-    public List<Car> getAvaibleCars()
-    {
+
+    public List<Car> getAvaibleCars() {
         return carFacade.findAll();
     }
-    
-    public String getCarBrand(int carID)
-    {
+
+    public String getCarBrand(int carID) {
         return carFacade.find(carID).getBrand();
     }
-    
-    public String getCarModel(int carID)
-    {
+
+    public String getCarModel(int carID) {
         return carFacade.find(carID).getModel();
     }
-    
-    
+
     public String update() {
         try {
             getFacade().edit(current);
