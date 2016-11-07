@@ -117,6 +117,11 @@ public class RentalController implements Serializable {
         return pagination;
     }
 
+    /**
+     * Retrieve all the students by using the web service StudentService
+     *
+     * @return
+     */
     public List<Student> retrieveMLVStudents() {
         StudentService_Service sv = new StudentService_Service();
         StudentService service = sv.getStudentServicePort();
@@ -124,6 +129,11 @@ public class RentalController implements Serializable {
         return service.getAllStudents();
     }
 
+    /**
+     * Retrieve all the teachers by using the web service TeacherService
+     *
+     * @return
+     */
     public List<Teacher> retrieveMLVTeachers() {
         TeacherService_Service sv = new TeacherService_Service();
         TeacherService service = sv.getTeacherServicePort();
@@ -131,6 +141,10 @@ public class RentalController implements Serializable {
         return service.getAllTeachers();
     }
 
+    /**
+     * Retrieve all the students/teachers using the specific web services
+     * @return 
+     */
     public List<PersonEntity> retrieveMLVUsers() {
         List<PersonEntity> persons = new ArrayList<>();
 
@@ -145,6 +159,12 @@ public class RentalController implements Serializable {
         return persons;
     }
 
+    /**
+     * Check if the given person is a student or a teacher
+     * 
+     * @param o
+     * @return 
+     */
     public String getUserType(PersonEntity o) {
         StudentService_Service sv = new StudentService_Service();
         StudentService service = sv.getStudentServicePort();
@@ -180,21 +200,7 @@ public class RentalController implements Serializable {
             }
         }
     }
-
-    public Student retrieveMLVStudentByID(long studentID) {
-        StudentService_Service sv = new StudentService_Service();
-        StudentService service = sv.getStudentServicePort();
-
-        return service.getStudentByID(studentID);
-    }
-
-    public Student retrieveMLVStudentByEmail(String email) {
-        StudentService_Service sv = new StudentService_Service();
-        StudentService service = sv.getStudentServicePort();
-
-        return service.getStudentByEmail(email);
-    }
-
+    
     public String prepareList() {
         recreateModel();
         return "List";
@@ -256,6 +262,7 @@ public class RentalController implements Serializable {
 
     public String update() {
         try {
+            current.setClient_id(selectedUser.getId());
             getFacade().edit(current);
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Rental successful updated");
             FacesContext.getCurrentInstance().addMessage(null, msg);

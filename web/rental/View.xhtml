@@ -33,7 +33,7 @@
                     <h:outputText value="#{bundleRental.ViewRentalLabel_rentalPrice}"/>
                     <h:outputText value="#{rentalController.selected.rentalPrice}" title="#{bundleRental.ViewRentalTitle_rentalPrice}"/>
                     <h:outputText value="#{bundleRental.ViewRentalLabel_client_id}"/>
-                    <h:outputText value="#{rentalController.selected.client_id}" title="#{bundleRental.ViewRentalTitle_client_id}"/>
+                    <h:outputText value="#{rentalController.retrieveMLVUserByID(rentalController.selected.client_id).lastName} #{rentalController.retrieveMLVUserByID(rentalController.selected.client_id).firstName} (ID ##{rentalController.selected.client_id})" title="#{bundleRental.ViewRentalTitle_client_id}"/>
                 </p:panelGrid>
                 <br />
                 <p:commandButton ajax="true" update=":bodyForm" action="#{rentalController.destroyAndView}" value="#{bundleRental.ViewRentalDestroyLink}"/>

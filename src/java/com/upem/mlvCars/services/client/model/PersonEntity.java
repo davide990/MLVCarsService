@@ -12,6 +12,10 @@ import java.util.Objects;
 
 /**
  *
+ * Since both person and their inherited classes (student and teacher) they have
+ * no equals and hashcode methods inherited from the web service, this class 
+ * act like a binding for those classes.
+ * 
  * @author Davide Andrea Guastella <davide.guastella90@gmail.com>
  */
 public class PersonEntity extends Person {

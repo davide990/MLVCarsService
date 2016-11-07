@@ -10,11 +10,12 @@
         <ui:define name="title">
             <h:outputText value="#{bundleRental.EditRentalTitle}"></h:outputText>
         </ui:define>
+        <ui:define name="leftBar">
+            <ui:include src="leftBar.xhtml"/>
+        </ui:define>
         <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
             <h:form>
+                <p:growl id="growl" showDetail="true" sticky="true" />
                 <p:panelGrid columns="2">
                     <h:outputLabel value="#{bundleRental.EditRentalLabel_car}" for="car" />
                     <p:selectOneMenu id="car" value="#{rentalController.selected.car}" converter="carConverter" panelStyle="width:180px"
@@ -31,7 +32,13 @@
                     <h:outputLabel value="#{bundleRental.EditRentalLabel_rentalPrice}" for="rentalPrice" />
                     <p:spinner id="rentalPrice" value="#{rentalController.selected.rentalPrice}" title="#{bundleRental.EditRentalTitle_rentalPrice}" prefix="€" min="0" max="10000" />
                     <h:outputLabel value="#{bundleRental.EditRentalLabel_client_id}" for="client_id" />
-                    <h:inputText id="client_id" value="#{rentalController.selected.client_id}" title="#{bundleRental.EditRentalTitle_client_id}" />
+                    <p:selectOneMenu id="client_id" value="#{rentalController.selectedUser}" converter="personConverter" panelStyle="width:180px"
+                                     effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="startsWith">
+                        <f:selectItems value="#{rentalController.mlvUsers}" var="person" itemLabel="#{person.lastName} #{person.firstName}" itemValue="#{person}" />
+                        <p:column>
+                            <h:outputText value="#{t.lastName} #{t.firstName} (ID ##{t.id})" />
+                        </p:column>
+                    </p:selectOneMenu>
                 </p:panelGrid>
                 <p:commandButton ajax="false" action="#{rentalController.update}" value="#{bundleRental.EditRentalSaveLink}"/>
                 <br />

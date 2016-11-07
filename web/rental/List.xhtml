@@ -56,7 +56,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundleRental.ListRentalTitle_client_id}"/>
                             </f:facet>
-                            <h:outputText value="#{item.client_id}"/>
+                            <h:outputText value="#{rentalController.retrieveMLVUserByID(item.client_id).lastName} #{rentalController.retrieveMLVUserByID(item.client_id).firstName} (ID: #{item.client_id})"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">

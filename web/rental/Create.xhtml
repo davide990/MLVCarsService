@@ -36,10 +36,12 @@
                                      effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="startsWith">
                         <f:selectItems value="#{rentalController.mlvUsers}" var="person" itemLabel="#{person.lastName} #{person.firstName}" itemValue="#{person}" />
                         <p:column>
+                            <h:outputText value="#{rentalController.getUserType(t)}" />
+                        </p:column>
+                        <p:column>
                             <h:outputText value="#{t.lastName} #{t.firstName} (ID ##{t.id})" />
                         </p:column>
                     </p:selectOneMenu>
-
                 </p:panelGrid>
                 <br />
                 <p:commandButton action="#{rentalController.create}" value="#{bundleRental.CreateRentalSaveLink}" ajax="false" />
