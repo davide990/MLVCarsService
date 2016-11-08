@@ -17,4 +17,9 @@
             <var>bundleRental</var>
         </resource-bundle>
     </application>
+    <managed-bean>
+        <managed-bean-name>scheduleView</managed-bean-name>
+        <managed-bean-class>jsf.com.upem.mlvCars.rental.view.ScheduleView</managed-bean-class>
+    
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
 </faces-config>

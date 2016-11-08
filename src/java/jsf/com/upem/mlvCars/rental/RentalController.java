@@ -36,6 +36,10 @@ public class RentalController implements Serializable {
 
     private Rental current;
     private DataModel items = null;
+
+    @EJB
+    private jsf.com.upem.mlvCars.rental.view.ScheduleView scheduleView;
+
     @EJB
     private jpa.com.upem.mlvCars.rental.RentalFacade ejbFacade;
 
@@ -143,7 +147,8 @@ public class RentalController implements Serializable {
 
     /**
      * Retrieve all the students/teachers using the specific web services
-     * @return 
+     *
+     * @return
      */
     public List<PersonEntity> retrieveMLVUsers() {
         List<PersonEntity> persons = new ArrayList<>();
@@ -161,9 +166,9 @@ public class RentalController implements Serializable {
 
     /**
      * Check if the given person is a student or a teacher
-     * 
+     *
      * @param o
-     * @return 
+     * @return
      */
     public String getUserType(PersonEntity o) {
         StudentService_Service sv = new StudentService_Service();
@@ -174,14 +179,16 @@ public class RentalController implements Serializable {
         try {
             service.getStudentByID(o.getId());
             return "Student";
-        } catch (NoResultException e) {
-            try {
-                service_t.getTeacherByID(o.getId());
-                return "Teacher";
-            } catch (NoResultException ee) {
-                return "Unknown";
-            }
+        } catch (Exception e) {
         }
+
+        try {
+            service_t.getTeacherByID(o.getId());
+            return "Teacher";
+        } catch (Exception ee) {
+        }
+
+        return "Unknown";
     }
 
     public PersonEntity retrieveMLVUserByID(long id) {
@@ -192,15 +199,30 @@ public class RentalController implements Serializable {
 
         try {
             return PersonEntity.fromStudent(service.getStudentByID(id));
-        } catch (NoResultException e) {
-            try {
-                return PersonEntity.fromTeacher(service_t.getTeacherByID(id));
-            } catch (NoResultException ee) {
-                return null;
-            }
+        } catch (Exception e) {
         }
+
+        try {
+            return PersonEntity.fromTeacher(service_t.getTeacherByID(id));
+        } catch (Exception ee) {
+        }
+
+        return null;
     }
-    
+
+    public List<Rental> getAllRentals() {
+        return getFacade().findAll();
+    }
+
+    public String prepareScheduleView() {
+//        scheduleView.populate();
+//        List<Rental> allRentals = getFacade().findAll();
+//        for (Rental r : allRentals) {
+//            scheduleView.AddRentalSchedule(r);
+//        }
+        return "CalendarView";
+    }
+
     public String prepareList() {
         recreateModel();
         return "List";
