@@ -2,4 +2,5 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://localhost:8080/MlvUsers/StudentService?wsdl" uri="src/conf/xml-resources/web-service-references/StudentService/wsdl/localhost_8080/MlvUsers/StudentService.wsdl"/>
     <system systemId="http://localhost:8080/MlvUsers/TeacherService?wsdl" uri="src/conf/xml-resources/web-service-references/TeacherService/wsdl/localhost_8080/MlvUsers/TeacherService.wsdl"/>
+    <system systemId="http://localhost:8080/MlvBankService/BankService?wsdl" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/localhost_8080/MlvBankService/BankService.wsdl"/>
 </catalog>

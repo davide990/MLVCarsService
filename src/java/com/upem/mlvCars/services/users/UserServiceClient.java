@@ -32,18 +32,13 @@ public class UserServiceClient {
         TeacherService_Service sv_t = new TeacherService_Service();
         TeacherService service_t = sv_t.getTeacherServicePort();
 
-        try {
-            service.getStudentByID(o.getId());
+        if (service.getStudentByID(o.getId()) != null) {
             return "Student";
-        } catch (Exception e) {
         }
 
-        try {
-            service_t.getTeacherByID(o.getId());
+        if (service_t.getTeacherByID(o.getId()) != null) {
             return "Teacher";
-        } catch (Exception ee) {
         }
-
         return "Unknown";
     }
 
@@ -53,14 +48,12 @@ public class UserServiceClient {
         TeacherService_Service sv_t = new TeacherService_Service();
         TeacherService service_t = sv_t.getTeacherServicePort();
 
-        try {
+        if (PersonEntity.fromStudent(service.getStudentByID(id)) != null) {
             return PersonEntity.fromStudent(service.getStudentByID(id));
-        } catch (Exception e) {
         }
 
-        try {
+        if (PersonEntity.fromTeacher(service_t.getTeacherByID(id)) != null) {
             return PersonEntity.fromTeacher(service_t.getTeacherByID(id));
-        } catch (Exception ee) {
         }
 
         return null;

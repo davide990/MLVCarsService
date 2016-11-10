@@ -4,6 +4,7 @@ import com.upem.mlvCars.dao.CarFacade;
 import com.upem.mlvCars.dao.mlvRentalDAO;
 import com.upem.mlvCars.model.Car;
 import com.upem.mlvCars.model.Rental;
+import com.upem.mlvCars.services.bank.BankServiceClient;
 import com.upem.mlvCars.services.client.mlvStudents.Student;
 import com.upem.mlvCars.services.client.mlvStudents.StudentService;
 import com.upem.mlvCars.services.client.mlvStudents.StudentService_Service;
@@ -234,7 +235,12 @@ public class RentalController implements Serializable {
                 return null;
             }
 
+            //Add the rental
             getFacade().create(current);
+
+            //withdraw the rental price from the user bank account
+            BankServiceClient.withdrawMoneyFromUserAccount(selectedUser.getIban(), current.getRentalPrice());
+
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Rental successful added");
             FacesContext.getCurrentInstance().addMessage(null, msg);
             return prepareCreate();
@@ -247,8 +253,8 @@ public class RentalController implements Serializable {
 
     /**
      * Check if the rental the user wants to save is valid
-     * 
-     * @return 
+     *
+     * @return
      */
     private boolean validateRental() {
         if (!checkValidRental()) {

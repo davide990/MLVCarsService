@@ -83,5 +83,21 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/com/upem/mlvCars/services/client/mlvTeachers"/>
         <delete dir="${build.generated.dir}/jax-wsCache/TeacherService"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-StudentService, wsimport-client-TeacherService"/>
+    <target name="wsimport-client-BankService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/BankService"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/BankService" destdir="${build.generated.dir}/jax-wsCache/BankService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/BankService/wsdl/localhost_8080/MlvBankService/BankService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/MlvBankService/BankService?wsdl" xnocompile="true" xendorsed="true" package="com.upem.mlvCars.services.bank">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/BankService/wsdl/localhost_8080/MlvBankService/BankService.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/BankService"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/BankService">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-BankService" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/com/upem/mlvCars/services/bank"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/BankService"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-StudentService, wsimport-client-TeacherService, wsimport-client-BankService"/>
 </project>

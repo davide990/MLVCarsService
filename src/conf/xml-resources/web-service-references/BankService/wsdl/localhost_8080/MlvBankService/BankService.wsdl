@@ -1,0 +1,302 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://services.mlvBank.upem.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="BankService" targetNamespace="http://services.mlvBank.upem.com/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://services.mlvBank.upem.com/" targetNamespace="http://services.mlvBank.upem.com/" version="1.0">
+
+  <xs:element name="compte" type="tns:compte"/>
+
+  <xs:element name="create" type="tns:create"/>
+
+  <xs:element name="delete" type="tns:delete"/>
+
+  <xs:element name="depositMoneyTo" type="tns:depositMoneyTo"/>
+
+  <xs:element name="disbleAccount" type="tns:disbleAccount"/>
+
+  <xs:element name="enableAccount" type="tns:enableAccount"/>
+
+  <xs:element name="getAccountState" type="tns:getAccountState"/>
+
+  <xs:element name="getAccountStateResponse" type="tns:getAccountStateResponse"/>
+
+  <xs:element name="getAllCompte" type="tns:getAllCompte"/>
+
+  <xs:element name="getAllCompteResponse" type="tns:getAllCompteResponse"/>
+
+  <xs:element name="getCompteBy" type="tns:getCompteBy"/>
+
+  <xs:element name="getCompteByResponse" type="tns:getCompteByResponse"/>
+
+  <xs:element name="update" type="tns:update"/>
+
+  <xs:element name="withdrawMoneyFrom" type="tns:withdrawMoneyFrom"/>
+
+  <xs:complexType name="enableAccount">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="iban" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="disbleAccount">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="iban" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getAllCompte">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getAllCompteResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:compte"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="compte">
+    <xs:sequence>
+      <xs:element name="amount" type="xs:int"/>
+      <xs:element minOccurs="0" name="comptePassword" type="xs:string"/>
+      <xs:element minOccurs="0" name="currency" type="xs:string"/>
+      <xs:element minOccurs="0" name="iban" type="xs:string"/>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element minOccurs="0" name="ownerFirstName" type="xs:string"/>
+      <xs:element minOccurs="0" name="ownerLastName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="create">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="compte" type="tns:compte"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="update">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="compte" type="tns:compte"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="depositMoneyTo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="iban" type="xs:string"/>
+      <xs:element name="amount" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="withdrawMoneyFrom">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="iban" type="xs:string"/>
+      <xs:element name="amount" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCompteBy">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="iban" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCompteByResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:compte"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="delete">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="compte" type="tns:compte"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getAccountState">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="iban" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getAccountStateResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="enableAccount">
+    <wsdl:part element="tns:enableAccount" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="disbleAccount">
+    <wsdl:part element="tns:disbleAccount" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAccountStateResponse">
+    <wsdl:part element="tns:getAccountStateResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="update">
+    <wsdl:part element="tns:update" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="depositMoneyTo">
+    <wsdl:part element="tns:depositMoneyTo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="withdrawMoneyFrom">
+    <wsdl:part element="tns:withdrawMoneyFrom" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCompteBy">
+    <wsdl:part element="tns:getCompteBy" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="delete">
+    <wsdl:part element="tns:delete" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAccountState">
+    <wsdl:part element="tns:getAccountState" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCompteByResponse">
+    <wsdl:part element="tns:getCompteByResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllCompte">
+    <wsdl:part element="tns:getAllCompte" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="create">
+    <wsdl:part element="tns:create" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllCompteResponse">
+    <wsdl:part element="tns:getAllCompteResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="BankService">
+    <wsdl:operation name="enableAccount">
+      <wsdl:input message="tns:enableAccount" name="enableAccount">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="disbleAccount">
+      <wsdl:input message="tns:disbleAccount" name="disbleAccount">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="getAllCompte">
+      <wsdl:input message="tns:getAllCompte" name="getAllCompte">
+    </wsdl:input>
+      <wsdl:output message="tns:getAllCompteResponse" name="getAllCompteResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="create">
+      <wsdl:input message="tns:create" name="create">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="update">
+      <wsdl:input message="tns:update" name="update">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="depositMoneyTo">
+      <wsdl:input message="tns:depositMoneyTo" name="depositMoneyTo">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="withdrawMoneyFrom">
+      <wsdl:input message="tns:withdrawMoneyFrom" name="withdrawMoneyFrom">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="getCompteBy">
+      <wsdl:input message="tns:getCompteBy" name="getCompteBy">
+    </wsdl:input>
+      <wsdl:output message="tns:getCompteByResponse" name="getCompteByResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="delete">
+      <wsdl:input message="tns:delete" name="delete">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="getAccountState">
+      <wsdl:input message="tns:getAccountState" name="getAccountState">
+    </wsdl:input>
+      <wsdl:output message="tns:getAccountStateResponse" name="getAccountStateResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BankServiceSoapBinding" type="tns:BankService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="enableAccount">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="enableAccount">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="disbleAccount">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="disbleAccount">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="getAllCompte">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAllCompte">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllCompteResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="create">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="create">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="update">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="update">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="depositMoneyTo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="depositMoneyTo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="withdrawMoneyFrom">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="withdrawMoneyFrom">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="getCompteBy">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getCompteBy">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCompteByResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="delete">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="delete">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="getAccountState">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAccountState">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAccountStateResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BankService">
+    <wsdl:port binding="tns:BankServiceSoapBinding" name="BankServicePort">
+      <soap:address location="http://localhost:8080/MlvBankService/BankService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
