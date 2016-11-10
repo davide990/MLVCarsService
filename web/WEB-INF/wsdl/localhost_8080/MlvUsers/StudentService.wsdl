@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.users.upem.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="StudentService" targetNamespace="http://service.users.upem.com/">
   <wsdl:types>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.users.upem.com/" elementFormDefault="unqualified" targetNamespace="http://service.users.upem.com/" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.users.upem.com/" targetNamespace="http://service.users.upem.com/" version="1.0">
 
   <xs:element name="createStudent" type="tns:createStudent"/>
 
@@ -23,6 +23,10 @@
   <xs:element name="getStudentByIDResponse" type="tns:getStudentByIDResponse"/>
 
   <xs:element name="student" type="tns:student"/>
+
+  <xs:element name="studentHasEnoughMoney" type="tns:studentHasEnoughMoney"/>
+
+  <xs:element name="studentHasEnoughMoneyResponse" type="tns:studentHasEnoughMoneyResponse"/>
 
   <xs:element name="updateStudent" type="tns:updateStudent"/>
 
@@ -103,6 +107,19 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="studentHasEnoughMoney">
+    <xs:sequence>
+      <xs:element name="student_id" type="xs:int"/>
+      <xs:element name="purchase_amount" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="studentHasEnoughMoneyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="deleteStudent">
     <xs:sequence>
       <xs:element minOccurs="0" name="student" type="tns:student"/>
@@ -123,6 +140,14 @@
     <wsdl:part element="tns:existsStudentResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="getAllStudentsResponse">
+    <wsdl:part element="tns:getAllStudentsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStudentByEmailResponse">
+    <wsdl:part element="tns:getStudentByEmailResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="getStudentByID">
     <wsdl:part element="tns:getStudentByID" name="parameters">
     </wsdl:part>
@@ -135,20 +160,20 @@
     <wsdl:part element="tns:getStudentByEmail" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="getAllStudentsResponse">
-    <wsdl:part element="tns:getAllStudentsResponse" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="getStudentByIDResponse">
     <wsdl:part element="tns:getStudentByIDResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="getStudentByEmailResponse">
-    <wsdl:part element="tns:getStudentByEmailResponse" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="createStudent">
     <wsdl:part element="tns:createStudent" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="studentHasEnoughMoney">
+    <wsdl:part element="tns:studentHasEnoughMoney" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="studentHasEnoughMoneyResponse">
+    <wsdl:part element="tns:studentHasEnoughMoneyResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="deleteStudent">
@@ -187,6 +212,12 @@
     <wsdl:operation name="createStudent">
       <wsdl:input message="tns:createStudent" name="createStudent">
     </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="studentHasEnoughMoney">
+      <wsdl:input message="tns:studentHasEnoughMoney" name="studentHasEnoughMoney">
+    </wsdl:input>
+      <wsdl:output message="tns:studentHasEnoughMoneyResponse" name="studentHasEnoughMoneyResponse">
+    </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="deleteStudent">
       <wsdl:input message="tns:deleteStudent" name="deleteStudent">
@@ -242,6 +273,15 @@
       <wsdl:input name="createStudent">
         <soap:body use="literal"/>
       </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="studentHasEnoughMoney">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="studentHasEnoughMoney">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="studentHasEnoughMoneyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="deleteStudent">
       <soap:operation soapAction="" style="document"/>

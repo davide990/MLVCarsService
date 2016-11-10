@@ -11,6 +11,7 @@ import com.upem.mlvCars.services.client.mlvTeachers.Teacher;
 import com.upem.mlvCars.services.client.mlvTeachers.TeacherService;
 import com.upem.mlvCars.services.client.mlvTeachers.TeacherService_Service;
 import com.upem.mlvCars.services.client.model.PersonEntity;
+import com.upem.mlvCars.services.users.UserServiceClient;
 import jsf.com.upem.mlvCars.rental.util.JsfUtil;
 import jsf.com.upem.mlvCars.rental.util.PaginationHelper;
 import jpa.com.upem.mlvCars.rental.RentalFacade;
@@ -49,7 +50,6 @@ public class RentalController implements Serializable {
 
     private Rental current;
     private DataModel items = null;
-
     private Car selectedCar;
     private List<Car> avaibleCar;
     private PersonEntity selectedUser;
@@ -123,30 +123,6 @@ public class RentalController implements Serializable {
     }
 
     /**
-     * Retrieve all the students by using the web service StudentService
-     *
-     * @return
-     */
-    public List<Student> retrieveMLVStudents() {
-        StudentService_Service sv = new StudentService_Service();
-        StudentService service = sv.getStudentServicePort();
-
-        return service.getAllStudents();
-    }
-
-    /**
-     * Retrieve all the teachers by using the web service TeacherService
-     *
-     * @return
-     */
-    public List<Teacher> retrieveMLVTeachers() {
-        TeacherService_Service sv = new TeacherService_Service();
-        TeacherService service = sv.getTeacherServicePort();
-
-        return service.getAllTeachers();
-    }
-
-    /**
      * Check if two date ranges overlap
      *
      * @param start1
@@ -191,11 +167,11 @@ public class RentalController implements Serializable {
     public List<PersonEntity> retrieveMLVUsers() {
         List<PersonEntity> persons = new ArrayList<>();
 
-        retrieveMLVStudents().stream().forEach((s) -> {
+        UserServiceClient.retrieveMLVStudents().stream().forEach((s) -> {
             persons.add(PersonEntity.fromStudent(s));
         });
 
-        retrieveMLVTeachers().stream().forEach((t) -> {
+        UserServiceClient.retrieveMLVTeachers().stream().forEach((t) -> {
             persons.add(PersonEntity.fromTeacher(t));
         });
 
@@ -209,43 +185,11 @@ public class RentalController implements Serializable {
      * @return
      */
     public String getUserType(PersonEntity o) {
-        StudentService_Service sv = new StudentService_Service();
-        StudentService service = sv.getStudentServicePort();
-        TeacherService_Service sv_t = new TeacherService_Service();
-        TeacherService service_t = sv_t.getTeacherServicePort();
-
-        try {
-            service.getStudentByID(o.getId());
-            return "Student";
-        } catch (Exception e) {
-        }
-
-        try {
-            service_t.getTeacherByID(o.getId());
-            return "Teacher";
-        } catch (Exception ee) {
-        }
-
-        return "Unknown";
+        return UserServiceClient.getUserType(o);
     }
 
     public PersonEntity retrieveMLVUserByID(int id) {
-        StudentService_Service sv = new StudentService_Service();
-        StudentService service = sv.getStudentServicePort();
-        TeacherService_Service sv_t = new TeacherService_Service();
-        TeacherService service_t = sv_t.getTeacherServicePort();
-
-        try {
-            return PersonEntity.fromStudent(service.getStudentByID(id));
-        } catch (Exception e) {
-        }
-
-        try {
-            return PersonEntity.fromTeacher(service_t.getTeacherByID(id));
-        } catch (Exception ee) {
-        }
-
-        return null;
+        return UserServiceClient.retrieveMLVUserByID(id);
     }
 
     public List<Rental> getAllRentals() {
@@ -286,9 +230,7 @@ public class RentalController implements Serializable {
         try {
             current.setClient_id(selectedUser.getId());
 
-            if (!checkValidRental()) {
-                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "The rental is not possible for the specified date interval.");
-                FacesContext.getCurrentInstance().addMessage(null, msg);
+            if (!validateRental()) {
                 return null;
             }
 
@@ -301,6 +243,27 @@ public class RentalController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
             return null;
         }
+    }
+
+    /**
+     * Check if the rental the user wants to save is valid
+     * 
+     * @return 
+     */
+    private boolean validateRental() {
+        if (!checkValidRental()) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "The rental is not possible for the specified date interval.");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            return false;
+        }
+
+        if (!UserServiceClient.userHasEnoughMoney(selectedUser.getId(), current.getRentalPrice())) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Bank service returned an error: user has not enough money for rental.");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            return false;
+        }
+
+        return true;
     }
 
     /**

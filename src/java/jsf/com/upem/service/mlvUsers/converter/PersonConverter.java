@@ -9,6 +9,7 @@ import com.upem.mlvCars.services.client.mlvStudents.Person;
 import com.upem.mlvCars.services.client.mlvStudents.Student;
 import com.upem.mlvCars.services.client.mlvTeachers.Teacher;
 import com.upem.mlvCars.services.client.model.PersonEntity;
+import com.upem.mlvCars.services.users.UserServiceClient;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -26,13 +27,13 @@ public class PersonConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
+//
+//        FacesContext facesContext = FacesContext.getCurrentInstance();
+//        RentalController neededBean
+//                = (RentalController) facesContext.getApplication()
+//                .getELResolver().getValue(context.getELContext(), null, "rentalController");
 
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        RentalController neededBean
-                = (RentalController) facesContext.getApplication()
-                .getELResolver().getValue(context.getELContext(), null, "rentalController");
-
-        PersonEntity result = neededBean.retrieveMLVUserByID(Integer.parseInt(value));
+        PersonEntity result = UserServiceClient.retrieveMLVUserByID(Integer.parseInt(value));
 
         return result;
     }

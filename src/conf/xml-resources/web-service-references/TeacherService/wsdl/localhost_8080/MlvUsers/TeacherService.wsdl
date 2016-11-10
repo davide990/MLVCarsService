@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.users.upem.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="TeacherService" targetNamespace="http://service.users.upem.com/">
   <wsdl:types>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.users.upem.com/" elementFormDefault="unqualified" targetNamespace="http://service.users.upem.com/" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.users.upem.com/" targetNamespace="http://service.users.upem.com/" version="1.0">
 
   <xs:element name="createTeacher" type="tns:createTeacher"/>
 
@@ -23,6 +23,10 @@
   <xs:element name="getTeacherByIDResponse" type="tns:getTeacherByIDResponse"/>
 
   <xs:element name="teacher" type="tns:teacher"/>
+
+  <xs:element name="teacherHasEnoughMoney" type="tns:teacherHasEnoughMoney"/>
+
+  <xs:element name="teacherHasEnoughMoneyResponse" type="tns:teacherHasEnoughMoneyResponse"/>
 
   <xs:element name="updateTeacher" type="tns:updateTeacher"/>
 
@@ -64,6 +68,19 @@
   <xs:complexType name="getTeacherByIDResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="tns:teacher"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="teacherHasEnoughMoney">
+    <xs:sequence>
+      <xs:element name="teacher_id" type="xs:int"/>
+      <xs:element name="purchase_amount" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="teacherHasEnoughMoneyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -119,16 +136,28 @@
     <wsdl:part element="tns:getTeacherByID" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="getTeacherByIDResponse">
-    <wsdl:part element="tns:getTeacherByIDResponse" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="getTeacherByEmail">
     <wsdl:part element="tns:getTeacherByEmail" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="existsTeacherResponse">
     <wsdl:part element="tns:existsTeacherResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteTeacher">
+    <wsdl:part element="tns:deleteTeacher" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTeacherByIDResponse">
+    <wsdl:part element="tns:getTeacherByIDResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="teacherHasEnoughMoney">
+    <wsdl:part element="tns:teacherHasEnoughMoney" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="teacherHasEnoughMoneyResponse">
+    <wsdl:part element="tns:teacherHasEnoughMoneyResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="existsTeacher">
@@ -151,10 +180,6 @@
     <wsdl:part element="tns:getAllTeachersResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="deleteTeacher">
-    <wsdl:part element="tns:deleteTeacher" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:portType name="TeacherService">
     <wsdl:operation name="getAllTeachers">
       <wsdl:input message="tns:getAllTeachers" name="getAllTeachers">
@@ -166,6 +191,12 @@
       <wsdl:input message="tns:getTeacherByID" name="getTeacherByID">
     </wsdl:input>
       <wsdl:output message="tns:getTeacherByIDResponse" name="getTeacherByIDResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="teacherHasEnoughMoney">
+      <wsdl:input message="tns:teacherHasEnoughMoney" name="teacherHasEnoughMoney">
+    </wsdl:input>
+      <wsdl:output message="tns:teacherHasEnoughMoneyResponse" name="teacherHasEnoughMoneyResponse">
     </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getTeacherByEmail">
@@ -210,6 +241,15 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getTeacherByIDResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="teacherHasEnoughMoney">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="teacherHasEnoughMoney">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="teacherHasEnoughMoneyResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
