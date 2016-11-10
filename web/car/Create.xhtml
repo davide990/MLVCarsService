@@ -29,7 +29,7 @@
                     <h:outputLabel value="#{bundle.CreateCarLabel_model}" for="model" />
                     <p:inputText id="model" value="#{carController.selected.model}" title="#{bundle.CreateCarTitle_model}" />
                     <h:outputLabel value="#{bundle.CreateCarLabel_purchaseDate}" for="purchaseDate" />                    
-                    <p:calendar  id="purchaseDate" value="#{carController.selected.purchaseDate}" showOn="button" title="#{bundle.CreateCarTitle_purchaseDate}"/>
+                    <p:calendar required="true" id="purchaseDate" value="#{carController.selected.purchaseDate}" showOn="button" title="#{bundle.CreateCarTitle_purchaseDate}"/>
                     <h:outputLabel value="#{bundle.CreateCarLabel_maxPassengers}" for="maxPassengers" />
                     <p:inputText id="maxPassengers" value="#{carController.selected.maxPassengers}" title="#{bundle.CreateCarTitle_maxPassengers}" />
                     <h:outputLabel value="#{bundle.CreateCarLabel_maxSpeed}" for="maxSpeed" />

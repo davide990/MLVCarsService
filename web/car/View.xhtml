@@ -40,6 +40,8 @@
                     <h:outputText value="#{carController.selected.airConditioner}" />
                     <h:outputText value="Automatic Transmission" />
                     <h:outputText value="#{carController.selected.automaticTransmission}" />
+                    <h:outputText value="Is on sale" />
+                    <h:outputText value="#{carController.isVehicleOnSale(carController.selected.id)}" />
                 </p:panelGrid>
                 <br />
                 <p:commandButton ajax="true" update=":bodyForm" action="#{carController.destroyAndView}" value="#{bundle.ViewCarDestroyLink}"/>

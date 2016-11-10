@@ -40,6 +40,12 @@
                     <h:outputText value="#{rentalController.selected.userComment}" title="#{bundleRental.ViewRentalTitle_userComment}"/>                    
                     <h:outputText value="#{bundleRental.ViewRentalLabel_client_id}"/>
                     <h:outputText value="#{rentalController.retrieveMLVUserByID(rentalController.selected.client_id).lastName} #{rentalController.retrieveMLVUserByID(rentalController.selected.client_id).firstName} (ID ##{rentalController.selected.client_id})" title="#{bundleRental.ViewRentalTitle_client_id}"/>
+                    <h:outputText value="Number of previous rental: "/>
+                    <h:outputText value="#{rentalController.numberOfPreviousRental(rentalController.selected.car.id)}"/>
+                    <h:outputText value="Is rented: "/>
+                    <h:outputText value="#{rentalController.isVehicleRented(rentalController.selected.car.id)}"/>
+                    <h:outputText value="Avaible for rental: "/>
+                    <h:outputText value="#{rentalController.isVehicleAvaibleForRental(rentalController.selected.car.id, rentalController.selected.rentalStart, rentalController.selected.rentalEnd)}"/>
                 </p:panelGrid>
                 <br />
                 <p:commandButton ajax="true" update=":bodyForm" action="#{rentalController.destroyAndView}" value="#{bundleRental.ViewRentalDestroyLink}"/>

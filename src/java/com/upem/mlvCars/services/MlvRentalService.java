@@ -58,14 +58,4 @@ public class MlvRentalService {
         return ejbRef.isVehicleRented(vehichleID);
     }
 
-    @WebMethod(operationName = "isVehicleOnSale")
-    public boolean isVehicleOnSale(@WebParam(name = "vehichleID") int vehichleID) {
-        return ejbRef.isVehicleOnSale(vehichleID);
-    }
-
-    @WebMethod(operationName = "getVehiclesOnSale")
-    public List<Vehicle> getVehiclesOnSale() {
-        return ejbRef.getVehiclesOnSale();
-    }
-    
 }

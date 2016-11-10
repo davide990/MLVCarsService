@@ -7,9 +7,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -55,73 +58,115 @@ public class mlvCarsDAO {
     }
 
     public List<Vehicle> getAllVehicles() {
-        TypedQuery<Vehicle> q = em.createQuery("select e from vehicle e", Vehicle.class);
-        return q.getResultList();
-    }
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Vehicle> vehicle = builder.createQuery(Vehicle.class);
 
-    public Vehicle getVehicleByID(int student_id) {
-        Vehicle s;
-        TypedQuery<Vehicle> q = em.createQuery("select e from vehicle e where e.id = '" + student_id + "'", Vehicle.class);
+        Root<Vehicle> vehicleRoot = vehicle.from(Vehicle.class);
+        vehicle.select(vehicleRoot);
+        TypedQuery<Vehicle> pp = em.createQuery(vehicle);
 
         try {
-            s = q.getSingleResult();
-        } catch (NoResultException e) {
+            return pp.getResultList();
+        } catch (Exception e) {
             return null;
         }
+    }
 
-        return s;
+    public Vehicle getVehicleByID(int id) {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Vehicle> vehicle = builder.createQuery(Vehicle.class);
+
+        Root<Vehicle> vehicleRoot = vehicle.from(Vehicle.class);
+        Predicate pd = builder.equal(vehicleRoot.get("id"), id);
+
+        vehicle.select(vehicleRoot).where(pd);
+        TypedQuery<Vehicle> pp = em.createQuery(vehicle);
+
+        try {
+            return pp.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Vehicle getVehicleByMaxPassengers(int mp) {
-        Vehicle s;
-        TypedQuery<Vehicle> q = em.createQuery("select e from vehicle e where e.maxPassengers = '" + mp + "'", Vehicle.class);
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Vehicle> vehicle = builder.createQuery(Vehicle.class);
+
+        Root<Vehicle> vehicleRoot = vehicle.from(Vehicle.class);
+        Predicate pd = builder.equal(vehicleRoot.get("maxPassengers"), mp);
+
+        vehicle.select(vehicleRoot).where(pd);
+        TypedQuery<Vehicle> pp = em.createQuery(vehicle);
 
         try {
-            s = q.getSingleResult();
-        } catch (NoResultException e) {
+            return pp.getSingleResult();
+        } catch (Exception e) {
             return null;
         }
-
-        return s;
     }
 
     public Car getCarByID(int id) {
-        Car s;
-        TypedQuery<Car> q = em.createQuery("select e from vehicle e where e.id = '" + id + "'", Car.class);
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Vehicle> vehicle = builder.createQuery(Vehicle.class);
+
+        Root<Vehicle> vehicleRoot = vehicle.from(Vehicle.class); //ROOT
+        Root<Car> carRoot = builder.treat(vehicleRoot, Car.class);   //SUBCLASS
+
+        Predicate pd_1 = builder.equal(carRoot.get("id"), vehicleRoot.get("id"));
+        Predicate pd_2 = builder.equal(carRoot.get("id"), id);
+        Predicate pd_3 = builder.and(pd_1, pd_2);
+
+        vehicle.select(vehicleRoot).where(pd_3);
+        TypedQuery<Vehicle> pp = em.createQuery(vehicle);
 
         try {
-            s = q.getSingleResult();
-        } catch (NoResultException e) {
+            return (Car) pp.getSingleResult();
+        } catch (Exception e) {
             return null;
         }
-
-        return s;
     }
 
     public Car getCarByBrand(String brand) {
-        Car s;
-        TypedQuery<Car> q = em.createQuery("select e from vehicle e where e.id = '" + brand + "'", Car.class);
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Vehicle> vehicle = builder.createQuery(Vehicle.class);
+
+        Root<Vehicle> vehicleRoot = vehicle.from(Vehicle.class); //ROOT
+        Root<Car> carRoot = builder.treat(vehicleRoot, Car.class);   //SUBCLASS
+
+        Predicate pd_1 = builder.equal(carRoot.get("id"), vehicleRoot.get("id"));
+        Predicate pd_2 = builder.equal(carRoot.get("brand"), brand);
+        Predicate pd_3 = builder.and(pd_1, pd_2);
+
+        vehicle.select(vehicleRoot).where(pd_3);
+        TypedQuery<Vehicle> pp = em.createQuery(vehicle);
 
         try {
-            s = q.getSingleResult();
-        } catch (NoResultException e) {
+            return (Car) pp.getSingleResult();
+        } catch (Exception e) {
             return null;
         }
-
-        return s;
     }
 
     public Car getCarByModel(String model) {
-        Car s;
-        TypedQuery<Car> q = em.createQuery("select e from vehicle e where e.model = '" + model + "'", Car.class);
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Vehicle> vehicle = builder.createQuery(Vehicle.class);
+
+        Root<Vehicle> vehicleRoot = vehicle.from(Vehicle.class); //ROOT
+        Root<Car> carRoot = builder.treat(vehicleRoot, Car.class);   //SUBCLASS
+
+        Predicate pd_1 = builder.equal(carRoot.get("id"), vehicleRoot.get("id"));
+        Predicate pd_2 = builder.equal(carRoot.get("model"), model);
+        Predicate pd_3 = builder.and(pd_1, pd_2);
+
+        vehicle.select(vehicleRoot).where(pd_3);
+        TypedQuery<Vehicle> pp = em.createQuery(vehicle);
 
         try {
-            s = q.getSingleResult();
-        } catch (NoResultException e) {
+            return (Car) pp.getSingleResult();
+        } catch (Exception e) {
             return null;
         }
-
-        return s;
     }
 
 }

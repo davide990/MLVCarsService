@@ -32,7 +32,7 @@ public class PersonConverter implements Converter {
                 = (RentalController) facesContext.getApplication()
                 .getELResolver().getValue(context.getELContext(), null, "rentalController");
 
-        PersonEntity result = neededBean.retrieveMLVUserByID(Long.parseLong(value));
+        PersonEntity result = neededBean.retrieveMLVUserByID(Integer.parseInt(value));
 
         return result;
     }

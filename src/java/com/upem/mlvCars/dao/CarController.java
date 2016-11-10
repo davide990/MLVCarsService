@@ -6,6 +6,9 @@ import com.upem.mlvCars.dao.util.PaginationHelper;
 import com.upem.mlvCars.model.CarType;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -130,6 +133,36 @@ public class CarController implements Serializable {
         recreatePagination();
         recreateModel();
         return "List";
+    }
+
+    @EJB
+    private mlvCarsDAO carsDAO;
+
+    @EJB
+    private mlvRentalDAO rentalDAO;
+
+    private static int getDiffYears(Date first, Date last) {
+        Calendar a = getCalendar(first);
+        Calendar b = getCalendar(last);
+        int diff = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
+        if (a.get(Calendar.DAY_OF_YEAR) > b.get(Calendar.DAY_OF_YEAR)) {
+            diff--;
+        }
+        return diff;
+    }
+
+    private static Calendar getCalendar(Date date) {
+        Calendar cal = Calendar.getInstance(Locale.getDefault());
+        cal.setTime(date);
+        return cal;
+    }
+    
+    public boolean isVehicleOnSale(int vehichleID) {
+        //prendi veicolo con l'id dato
+        Car v = carsDAO.getCarByID(vehichleID);
+
+        //se la data di acquisto e quella odierna distano piu di 2 anni
+        return getDiffYears(v.getPurchaseDate(), new Date()) > 2 && rentalDAO.numberOfPreviousRental(vehichleID) >= 1;
     }
 
     public String destroyAndView() {

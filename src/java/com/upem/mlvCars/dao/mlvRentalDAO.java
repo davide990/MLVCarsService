@@ -16,6 +16,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -71,51 +75,57 @@ public class mlvRentalDAO {
     }
 
     public int numberOfPreviousRental(int vehichleID) {
-        //SELECT p FROM Teacher t JOIN t.phones p WHERE t.firstName = :firstName
-        //SELECT r FROM rental r JOIN r.car c WHERE c.id = :id
-        TypedQuery<Rental> q = em.createQuery("SELECT r FROM rental r JOIN r.car c WHERE c.id='" + vehichleID + "'", Rental.class);
-        return q.getResultList().size();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Rental> rental = builder.createQuery(Rental.class);
+
+        Root<Rental> rentalRoot = rental.from(Rental.class);
+
+        Predicate pd_1 = builder.equal(rentalRoot.get("car").get("id"), vehichleID);
+
+        rental.select(rentalRoot).where(pd_1);
+        TypedQuery<Rental> pp = em.createQuery(rental);
+        return pp.getResultList().size();
+    }
+
+    public boolean isVehicleAvaibleForRental(int vehichleID, Date start, Date end) {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Rental> rental = builder.createQuery(Rental.class);
+
+        Root<Rental> rentalRoot = rental.from(Rental.class);
+
+        Predicate pd_1 = builder.lessThan(rentalRoot.get("rentalStart"), end);
+        Predicate pd_2 = builder.greaterThanOrEqualTo(rentalRoot.get("rentalEnd"), start);
+        Predicate pd_3 = builder.and(pd_1, pd_2);
+
+        rental.select(rentalRoot).where(pd_3);
+        TypedQuery<Rental> pp = em.createQuery(rental);
+
+        try {
+            pp.getSingleResult();
+            return false;
+        } catch (Exception e) {
+            return true;
+        }
     }
 
     public boolean isVehicleRented(int vehichleID) {
-        TypedQuery<Rental> q = em.createQuery("SELECT r FROM rental r JOIN r.car c WHERE c.id='" + vehichleID + "' AND r.rentalEnd > CURRENT_DATE()", Rental.class);
-        return q.getResultList().size() > 0;
-    }
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Rental> rental = builder.createQuery(Rental.class);
 
-    public boolean isVehicleOnSale(int vehichleID) {
-        //prendi veicolo con l'id dato
-        Car v = carsDAO.getCarByID(vehichleID);
-        //se la data di acquisto e quella odierna distano piu di 2 anni
+        Root<Rental> rentalRoot = rental.from(Rental.class);
 
-        return getDiffYears(v.getPurchaseDate(), new Date()) > 2 && numberOfPreviousRental(vehichleID) >= 1;
-    }
+        Predicate pd_1 = builder.equal(rentalRoot.get("car").get("id"), vehichleID);
+        Predicate pd_2 = builder.greaterThan(rentalRoot.get("rentalEnd"), new Date());
+        Predicate pd_3 = builder.and(pd_1, pd_2);
 
-    public List<Vehicle> getVehiclesOnSale() {
-        List<Vehicle> onSale = new ArrayList<>();
+        rental.select(rentalRoot).where(pd_3);
+        TypedQuery<Rental> pp = em.createQuery(rental);
 
-        for (Vehicle v : carsDAO.getAllVehicles()) {
-            if (isVehicleOnSale(v.getId())) {
-                onSale.add(v);
-            }
+        try {
+            pp.getSingleResult();
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-
-        return onSale;
     }
-
-    private static int getDiffYears(Date first, Date last) {
-        Calendar a = getCalendar(first);
-        Calendar b = getCalendar(last);
-        int diff = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
-        if (a.get(Calendar.DAY_OF_YEAR) > b.get(Calendar.DAY_OF_YEAR)) {
-            diff--;
-        }
-        return diff;
-    }
-
-    private static Calendar getCalendar(Date date) {
-        Calendar cal = Calendar.getInstance(Locale.getDefault());
-        cal.setTime(date);
-        return cal;
-    }
-
 }

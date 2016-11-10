@@ -1,6 +1,7 @@
 package jsf.com.upem.mlvCars.rental;
 
 import com.upem.mlvCars.dao.CarFacade;
+import com.upem.mlvCars.dao.mlvRentalDAO;
 import com.upem.mlvCars.model.Car;
 import com.upem.mlvCars.model.Rental;
 import com.upem.mlvCars.services.client.mlvStudents.Student;
@@ -16,6 +17,7 @@ import jpa.com.upem.mlvCars.rental.RentalFacade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -28,14 +30,13 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import javax.persistence.NoResultException;
 
 @Named("rentalController")
 @SessionScoped
 public class RentalController implements Serializable {
 
-    private Rental current;
-    private DataModel items = null;
+    @EJB
+    mlvRentalDAO rentalDAO;
 
     @EJB
     private jsf.com.upem.mlvCars.rental.view.ScheduleView scheduleView;
@@ -43,16 +44,16 @@ public class RentalController implements Serializable {
     @EJB
     private jpa.com.upem.mlvCars.rental.RentalFacade ejbFacade;
 
-    private Car selectedCar;
-
-    private List<Car> avaibleCar;
-
-    private PersonEntity selectedUser;
-    private List<PersonEntity> mlvUsers;
-
     @EJB
     private CarFacade carFacade;
 
+    private Rental current;
+    private DataModel items = null;
+
+    private Car selectedCar;
+    private List<Car> avaibleCar;
+    private PersonEntity selectedUser;
+    private List<PersonEntity> mlvUsers;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -146,6 +147,43 @@ public class RentalController implements Serializable {
     }
 
     /**
+     * Check if two date ranges overlap
+     *
+     * @param start1
+     * @param end1
+     * @param start2
+     * @param end2
+     * @return
+     */
+    boolean dateRangeOverlap(Date start1, Date end1, Date start2, Date end2) {
+        return start1.getTime() <= end2.getTime() && start2.getTime() <= end1.getTime();
+    }
+
+    /**
+     * Check if a car, given its ID, is
+     *
+     * @param vehichleID
+     * @return
+     */
+    public boolean isVehicleRented(int vehichleID) {
+        return rentalDAO.isVehicleRented(vehichleID);
+    }
+
+    public boolean isVehicleAvaibleForRental(int vehicleID, Date start, Date end) {
+        return rentalDAO.isVehicleAvaibleForRental(vehicleID, start, end);
+    }
+
+    /**
+     * Return the number of previous rental for a given car, given its ID
+     *
+     * @param vehichleID
+     * @return
+     */
+    public int numberOfPreviousRental(int vehichleID) {
+        return rentalDAO.numberOfPreviousRental(vehichleID);
+    }
+
+    /**
      * Retrieve all the students/teachers using the specific web services
      *
      * @return
@@ -191,7 +229,7 @@ public class RentalController implements Serializable {
         return "Unknown";
     }
 
-    public PersonEntity retrieveMLVUserByID(long id) {
+    public PersonEntity retrieveMLVUserByID(int id) {
         StudentService_Service sv = new StudentService_Service();
         StudentService service = sv.getStudentServicePort();
         TeacherService_Service sv_t = new TeacherService_Service();
@@ -247,6 +285,13 @@ public class RentalController implements Serializable {
     public String create() {
         try {
             current.setClient_id(selectedUser.getId());
+
+            if (!checkValidRental()) {
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "The rental is not possible for the specified date interval.");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+                return null;
+            }
+
             getFacade().create(current);
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Rental successful added");
             FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -256,6 +301,16 @@ public class RentalController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
             return null;
         }
+    }
+
+    /**
+     * Check if the user specified rental is valid, that is, the start/end dates
+     * don't overlap a rental already registered.
+     *
+     * @return
+     */
+    private boolean checkValidRental() {
+        return isVehicleAvaibleForRental(current.getCar().getId(), current.getRentalStart(), current.getRentalEnd());
     }
 
     public String prepareEdit() {

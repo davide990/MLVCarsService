@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -34,6 +35,7 @@ public class Car extends Vehicle {
     private boolean automaticTransmission;
 
     @Column(name = "purchaseDate")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date purchaseDate;
 
     public CarType getType() {
