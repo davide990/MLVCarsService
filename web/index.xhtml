@@ -8,7 +8,6 @@
         <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
 
-
     <h:body>
         Hello from Facelets
         <br />
@@ -17,30 +16,7 @@
         <h:link outcome="/car/List" value="Show All Car Items"/>
         <br />
         <br />
-        <p:panel id="login" header="Form Login">
-            <h:panelGrid columns="3" cellpadding="5">
-
-                <h:outputLabel for="username" value="Username"/>
-                <p:inputText id="username" required="true"/>
-                <p:messages id="msg_name" for="username" showDetail="false"/>
-
-                <h:outputLabel for="password" value="Password"/>
-                <p:password id="password" required="true"/>
-                <p:messages id="msg_password" for="password" showDetail="false"/>
-
-                <p:commandButton value="Login"/>
-            </h:panelGrid>
-        </p:panel>
-
-        <br />
         <h:link outcome="/rental/List" value="Show All Rental Items"/>
     </h:body>
-
-
-
-
-
-
-
 </html>
 
