@@ -39,6 +39,32 @@ public abstract class Vehicle implements Serializable {
     @Column(name = "maxSpeed")
     private int maxSpeed;
 
+    @Column(name = "sold")
+    private boolean sold;
+
+    @Column(name = "price")
+    private int price;
+
+    public Vehicle() {
+        sold = false;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
+    }
+
     public int getRentalPriceForDay() {
         return rentalPriceForDay;
     }

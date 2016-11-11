@@ -7,7 +7,10 @@ package com.upem.mlvCars.services;
 
 import com.upem.mlvCars.dao.mlvCarsDAO;
 import com.upem.mlvCars.model.Car;
+import com.upem.mlvCars.model.Rental;
 import com.upem.mlvCars.model.Vehicle;
+import com.upem.mlvCars.services.client.model.PersonEntity;
+import com.upem.mlvCars.services.users.UserServiceClient;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.Oneway;
@@ -81,7 +84,19 @@ public class MlvCarsService {
     public Boolean isVehicleOnSale(@WebParam(name = "vehicleID") int vehicleID) {
         return ejbRef.isVehicleOnSale(vehicleID);
     }
-    
-    
-    
+
+    @WebMethod(operationName = "buyCar")
+    public void buyCar(@WebParam(name = "userID") int userID,
+            @WebParam(name = "vehicleID") int vehicleID) {
+        ejbRef.buyCar(userID, vehicleID);
+    }
+
+    @WebMethod(operationName = "validateCarPurchase")
+    public boolean validateCarPurchase(@WebParam(name = "userID") int userID,
+            @WebParam(name = "vehicleID") int vehicleID) {
+
+        int carPrice = ejbRef.getCarByID(vehicleID).getPrice();
+        return UserServiceClient.userHasEnoughMoney(userID, carPrice);
+    }
+
 }

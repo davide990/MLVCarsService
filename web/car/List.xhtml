@@ -84,6 +84,18 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
+                                <h:outputText value="Sold"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sold}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Price"/>
+                            </f:facet>
+                            <h:outputText value="#{item.price}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
                             <p:commandLink ajax="true" update="@all" action="#{carController.prepareView}" value="#{bundle.ListCarViewLink}"/>

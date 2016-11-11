@@ -44,6 +44,10 @@
                     <h:outputText value="#{carController.isVehicleOnSale(carController.selected.id)}" />
                     <h:outputText value="Rental price for day"/>
                     <h:outputText value="#{carController.selected.rentalPriceForDay}"/>
+                    <h:outputText value="Sold"/>
+                    <h:outputText value="#{carController.selected.sold}"/>
+                    <h:outputText value="Car Price"/>
+                    <h:outputText value="#{carController.selected.price}"/>
                 </p:panelGrid>
                 <br />
                 <p:commandButton ajax="true" update=":bodyForm" action="#{carController.destroyAndView}" value="#{bundle.ViewCarDestroyLink}"/>

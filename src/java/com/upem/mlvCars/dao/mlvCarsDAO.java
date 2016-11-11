@@ -2,6 +2,10 @@ package com.upem.mlvCars.dao;
 
 import com.upem.mlvCars.model.Car;
 import com.upem.mlvCars.model.Vehicle;
+import com.upem.mlvCars.services.bank.BankService;
+import com.upem.mlvCars.services.bank.BankService_Service;
+import com.upem.mlvCars.services.client.model.PersonEntity;
+import com.upem.mlvCars.services.users.UserServiceClient;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -85,7 +89,9 @@ public class mlvCarsDAO {
         Car v = getCarByID(vehichleID);
 
         //se la data di acquisto e quella odierna distano piu di 2 anni
-        return getDiffYears(v.getPurchaseDate(), new Date()) > 2 && rentalDAO.numberOfPreviousRental(vehichleID) >= 1;
+        return getDiffYears(v.getPurchaseDate(), new Date()) > 2
+                && rentalDAO.numberOfPreviousRental(vehichleID) >= 1
+                && !v.isSold();
     }
 
     public List<Vehicle> getAllVehicles() {
@@ -213,6 +219,25 @@ public class mlvCarsDAO {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public void buyCar(int userID, int vehicleID) {
+        PersonEntity user = UserServiceClient.retrieveMLVUserByID(userID);
+        Car c = getCarByID(vehicleID);
+
+        BankService_Service sv = new BankService_Service();
+        BankService service = sv.getBankServicePort();
+        service.withdrawMoneyFrom(user.getIban(), c.getPrice());
+
+        c.setSold(true);
+        updateVehicle(c);
+    }
+
+    public boolean userCanBuy(PersonEntity user, int vehicleID) {
+        BankService_Service sv = new BankService_Service();
+        BankService service = sv.getBankServicePort();
+
+        return service.getAccountState(user.getIban()) >= getCarByID(vehicleID).getPrice();
     }
 
 }

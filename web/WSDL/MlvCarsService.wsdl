@@ -6,17 +6,32 @@
       <xsd:import namespace="http://services.mlvCars.upem.com/" schemaLocation="MlvCarsService_schema1.xsd"/>
     </xsd:schema>
   </types>
+  <message name="deleteVehicle">
+    <part name="parameters" element="tns:deleteVehicle"/>
+  </message>
+  <message name="buyCar">
+    <part name="parameters" element="tns:buyCar"/>
+  </message>
+  <message name="buyCarResponse">
+    <part name="parameters" element="tns:buyCarResponse"/>
+  </message>
+  <message name="validateCarPurchase">
+    <part name="parameters" element="tns:validateCarPurchase"/>
+  </message>
+  <message name="validateCarPurchaseResponse">
+    <part name="parameters" element="tns:validateCarPurchaseResponse"/>
+  </message>
+  <message name="addVehicle">
+    <part name="parameters" element="tns:addVehicle"/>
+  </message>
+  <message name="updateVehicle">
+    <part name="parameters" element="tns:updateVehicle"/>
+  </message>
   <message name="getAllVehicles">
     <part name="parameters" element="tns:getAllVehicles"/>
   </message>
   <message name="getAllVehiclesResponse">
     <part name="parameters" element="tns:getAllVehiclesResponse"/>
-  </message>
-  <message name="updateVehicle">
-    <part name="parameters" element="tns:updateVehicle"/>
-  </message>
-  <message name="deleteVehicle">
-    <part name="parameters" element="tns:deleteVehicle"/>
   </message>
   <message name="getVehicleByID">
     <part name="parameters" element="tns:getVehicleByID"/>
@@ -54,19 +69,27 @@
   <message name="isVehicleOnSaleResponse">
     <part name="parameters" element="tns:isVehicleOnSaleResponse"/>
   </message>
-  <message name="addVehicle">
-    <part name="parameters" element="tns:addVehicle"/>
-  </message>
   <portType name="MlvCarsService">
-    <operation name="getAllVehicles">
-      <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/getAllVehiclesRequest" message="tns:getAllVehicles"/>
-      <output wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/getAllVehiclesResponse" message="tns:getAllVehiclesResponse"/>
+    <operation name="deleteVehicle">
+      <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/deleteVehicle" message="tns:deleteVehicle"/>
+    </operation>
+    <operation name="buyCar">
+      <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/buyCarRequest" message="tns:buyCar"/>
+      <output wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/buyCarResponse" message="tns:buyCarResponse"/>
+    </operation>
+    <operation name="validateCarPurchase">
+      <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/validateCarPurchaseRequest" message="tns:validateCarPurchase"/>
+      <output wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/validateCarPurchaseResponse" message="tns:validateCarPurchaseResponse"/>
+    </operation>
+    <operation name="addVehicle">
+      <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/addVehicle" message="tns:addVehicle"/>
     </operation>
     <operation name="updateVehicle">
       <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/updateVehicle" message="tns:updateVehicle"/>
     </operation>
-    <operation name="deleteVehicle">
-      <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/deleteVehicle" message="tns:deleteVehicle"/>
+    <operation name="getAllVehicles">
+      <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/getAllVehiclesRequest" message="tns:getAllVehicles"/>
+      <output wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/getAllVehiclesResponse" message="tns:getAllVehiclesResponse"/>
     </operation>
     <operation name="getVehicleByID">
       <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/getVehicleByIDRequest" message="tns:getVehicleByID"/>
@@ -92,13 +115,16 @@
       <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/isVehicleOnSaleRequest" message="tns:isVehicleOnSale"/>
       <output wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/isVehicleOnSaleResponse" message="tns:isVehicleOnSaleResponse"/>
     </operation>
-    <operation name="addVehicle">
-      <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/addVehicle" message="tns:addVehicle"/>
-    </operation>
   </portType>
   <binding name="MlvCarsServicePortBinding" type="tns:MlvCarsService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-    <operation name="getAllVehicles">
+    <operation name="deleteVehicle">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+    </operation>
+    <operation name="buyCar">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -107,17 +133,35 @@
         <soap:body use="literal"/>
       </output>
     </operation>
+    <operation name="validateCarPurchase">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="addVehicle">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+    </operation>
     <operation name="updateVehicle">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
       </input>
     </operation>
-    <operation name="deleteVehicle">
+    <operation name="getAllVehicles">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
       </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
     </operation>
     <operation name="getVehicleByID">
       <soap:operation soapAction=""/>
@@ -172,12 +216,6 @@
       <output>
         <soap:body use="literal"/>
       </output>
-    </operation>
-    <operation name="addVehicle">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
     </operation>
   </binding>
   <service name="MlvCarsService">
