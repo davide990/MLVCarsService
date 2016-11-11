@@ -78,6 +78,12 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
+                                <h:outputText value="Rental price for day"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rentalPriceForDay}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
                             <p:commandLink ajax="true" update="@all" action="#{carController.prepareView}" value="#{bundle.ListCarViewLink}"/>

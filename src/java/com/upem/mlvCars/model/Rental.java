@@ -50,17 +50,17 @@ public class Rental implements Serializable {
     private int rentalPrice;
 
     @Column(name = "clientId")
-    private long client_id;
-    
+    private int clientId;
+
     @Column(name = "carStatusBeforeRental")
     private String carStatusBeforeRental;
-    
+
     @Column(name = "carStatusAfterRental")
     private String carStatusAfterRental;
-    
+
     @Column(name = "userComment")
     private String userComment;
-    
+
     public String getCarStatusBeforeRental() {
         return carStatusBeforeRental;
     }
@@ -121,12 +121,12 @@ public class Rental implements Serializable {
         this.rentalPrice = rentalPrice;
     }
 
-    public long getClient_id() {
-        return client_id;
+    public int getClientId() {
+        return clientId;
     }
 
-    public void setClient_id(long client_id) {
-        this.client_id = client_id;
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
     }
 
 }

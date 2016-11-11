@@ -2,9 +2,13 @@ package com.upem.mlvCars.dao;
 
 import com.upem.mlvCars.model.Car;
 import com.upem.mlvCars.model.Vehicle;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,6 +27,9 @@ public class mlvCarsDAO {
 
     @PersistenceContext
     private EntityManager em;
+
+    @EJB
+    mlvRentalDAO rentalDAO;
 
     private final static Logger logger = Logger.getLogger(mlvCarsDAO.class.getName());
 
@@ -57,6 +64,30 @@ public class mlvCarsDAO {
         em.remove(student);
     }
 
+    private static int getDiffYears(Date first, Date last) {
+        Calendar a = getCalendar(first);
+        Calendar b = getCalendar(last);
+        int diff = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
+        if (a.get(Calendar.DAY_OF_YEAR) > b.get(Calendar.DAY_OF_YEAR)) {
+            diff--;
+        }
+        return diff;
+    }
+
+    private static Calendar getCalendar(Date date) {
+        Calendar cal = Calendar.getInstance(Locale.getDefault());
+        cal.setTime(date);
+        return cal;
+    }
+
+    public boolean isVehicleOnSale(int vehichleID) {
+        //prendi veicolo con l'id dato
+        Car v = getCarByID(vehichleID);
+
+        //se la data di acquisto e quella odierna distano piu di 2 anni
+        return getDiffYears(v.getPurchaseDate(), new Date()) > 2 && rentalDAO.numberOfPreviousRental(vehichleID) >= 1;
+    }
+
     public List<Vehicle> getAllVehicles() {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Vehicle> vehicle = builder.createQuery(Vehicle.class);
@@ -64,6 +95,21 @@ public class mlvCarsDAO {
         Root<Vehicle> vehicleRoot = vehicle.from(Vehicle.class);
         vehicle.select(vehicleRoot);
         TypedQuery<Vehicle> pp = em.createQuery(vehicle);
+
+        try {
+            return pp.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public List<Car> getAllCars() {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Car> vehicle = builder.createQuery(Car.class);
+
+        Root<Car> vehicleRoot = vehicle.from(Car.class);
+        vehicle.select(vehicleRoot);
+        TypedQuery<Car> pp = em.createQuery(vehicle);
 
         try {
             return pp.getResultList();

@@ -76,7 +76,13 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundleRental.ListRentalTitle_client_id}"/>
                             </f:facet>
-                            <h:outputText value="#{rentalController.retrieveMLVUserByID(item.client_id).lastName} #{rentalController.retrieveMLVUserByID(item.client_id).firstName} (ID: #{item.client_id})"/>
+                            <h:outputText value="#{rentalController.retrieveMLVUserByID(item.clientId).lastName} #{rentalController.retrieveMLVUserByID(item.clientId).firstName} (ID: #{item.clientId})"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Total rental price"/>
+                            </f:facet>
+                            <h:outputText value="#{rentalController.getTotalRentalPrice(item)}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">

@@ -3,6 +3,9 @@ package com.upem.mlvCars.dao;
 import com.upem.mlvCars.model.Car;
 import com.upem.mlvCars.model.Rental;
 import com.upem.mlvCars.model.Vehicle;
+import com.upem.mlvCars.services.bank.BankServiceClient;
+import com.upem.mlvCars.services.client.model.PersonEntity;
+import com.upem.mlvCars.services.users.UserServiceClient;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,13 +39,19 @@ public class mlvRentalDAO {
 
     private final static Logger logger = Logger.getLogger(mlvRentalDAO.class.getName());
 
-    public void addRental(Rental rental) {
+    public void addRental(PersonEntity user, Rental rental) {
         /* persist:
             - Insert a new register to the database
             - Attach the object to the entity manager.
          */
         logger.log(Level.INFO, "Adding rental ID: " + rental.getId());
+        BankServiceClient.withdrawMoneyFromUserAccount(user.getIban(), rental.getRentalPrice());
         em.persist(rental);
+    }
+
+    public boolean isRentalValid(PersonEntity user, Rental rental) {
+        return UserServiceClient.userHasEnoughMoney(user.getId(), rental.getRentalPrice())
+                && isVehicleAvaibleForRental(rental.getCar().getId(), rental.getRentalStart(), rental.getRentalEnd());
     }
 
     public void updateRental(Rental rental) {

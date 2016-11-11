@@ -6,11 +6,11 @@
       <xsd:import namespace="http://services.mlvCars.upem.com/" schemaLocation="MlvRentalService_schema1.xsd"/>
     </xsd:schema>
   </types>
-  <message name="numberOfPreviousRental">
-    <part name="parameters" element="tns:numberOfPreviousRental"/>
+  <message name="validateRental">
+    <part name="parameters" element="tns:validateRental"/>
   </message>
-  <message name="numberOfPreviousRentalResponse">
-    <part name="parameters" element="tns:numberOfPreviousRentalResponse"/>
+  <message name="validateRentalResponse">
+    <part name="parameters" element="tns:validateRentalResponse"/>
   </message>
   <message name="updateRental">
     <part name="parameters" element="tns:updateRental"/>
@@ -27,31 +27,25 @@
   <message name="getRentalByIDResponse">
     <part name="parameters" element="tns:getRentalByIDResponse"/>
   </message>
+  <message name="numberOfPreviousRental">
+    <part name="parameters" element="tns:numberOfPreviousRental"/>
+  </message>
+  <message name="numberOfPreviousRentalResponse">
+    <part name="parameters" element="tns:numberOfPreviousRentalResponse"/>
+  </message>
   <message name="isVehicleRented">
     <part name="parameters" element="tns:isVehicleRented"/>
   </message>
   <message name="isVehicleRentedResponse">
     <part name="parameters" element="tns:isVehicleRentedResponse"/>
   </message>
-  <message name="isVehicleOnSale">
-    <part name="parameters" element="tns:isVehicleOnSale"/>
-  </message>
-  <message name="isVehicleOnSaleResponse">
-    <part name="parameters" element="tns:isVehicleOnSaleResponse"/>
-  </message>
-  <message name="getVehiclesOnSale">
-    <part name="parameters" element="tns:getVehiclesOnSale"/>
-  </message>
-  <message name="getVehiclesOnSaleResponse">
-    <part name="parameters" element="tns:getVehiclesOnSaleResponse"/>
-  </message>
   <message name="addRental">
     <part name="parameters" element="tns:addRental"/>
   </message>
   <portType name="MlvRentalService">
-    <operation name="numberOfPreviousRental">
-      <input wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/numberOfPreviousRentalRequest" message="tns:numberOfPreviousRental"/>
-      <output wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/numberOfPreviousRentalResponse" message="tns:numberOfPreviousRentalResponse"/>
+    <operation name="validateRental">
+      <input wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/validateRentalRequest" message="tns:validateRental"/>
+      <output wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/validateRentalResponse" message="tns:validateRentalResponse"/>
     </operation>
     <operation name="updateRental">
       <input wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/updateRental" message="tns:updateRental"/>
@@ -64,17 +58,13 @@
       <input wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/getRentalByIDRequest" message="tns:getRentalByID"/>
       <output wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/getRentalByIDResponse" message="tns:getRentalByIDResponse"/>
     </operation>
+    <operation name="numberOfPreviousRental">
+      <input wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/numberOfPreviousRentalRequest" message="tns:numberOfPreviousRental"/>
+      <output wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/numberOfPreviousRentalResponse" message="tns:numberOfPreviousRentalResponse"/>
+    </operation>
     <operation name="isVehicleRented">
       <input wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/isVehicleRentedRequest" message="tns:isVehicleRented"/>
       <output wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/isVehicleRentedResponse" message="tns:isVehicleRentedResponse"/>
-    </operation>
-    <operation name="isVehicleOnSale">
-      <input wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/isVehicleOnSaleRequest" message="tns:isVehicleOnSale"/>
-      <output wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/isVehicleOnSaleResponse" message="tns:isVehicleOnSaleResponse"/>
-    </operation>
-    <operation name="getVehiclesOnSale">
-      <input wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/getVehiclesOnSaleRequest" message="tns:getVehiclesOnSale"/>
-      <output wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/getVehiclesOnSaleResponse" message="tns:getVehiclesOnSaleResponse"/>
     </operation>
     <operation name="addRental">
       <input wsam:Action="http://services.mlvCars.upem.com/MlvRentalService/addRental" message="tns:addRental"/>
@@ -82,7 +72,7 @@
   </portType>
   <binding name="MlvRentalServicePortBinding" type="tns:MlvRentalService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-    <operation name="numberOfPreviousRental">
+    <operation name="validateRental">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -115,25 +105,16 @@
         <soap:body use="literal"/>
       </output>
     </operation>
+    <operation name="numberOfPreviousRental">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
     <operation name="isVehicleRented">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
-    <operation name="isVehicleOnSale">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
-    <operation name="getVehiclesOnSale">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

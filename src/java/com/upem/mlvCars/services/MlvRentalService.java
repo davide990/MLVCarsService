@@ -8,6 +8,7 @@ package com.upem.mlvCars.services;
 import com.upem.mlvCars.dao.mlvRentalDAO;
 import com.upem.mlvCars.model.Rental;
 import com.upem.mlvCars.model.Vehicle;
+import com.upem.mlvCars.services.client.model.PersonEntity;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.Oneway;
@@ -23,13 +24,19 @@ import javax.jws.WebService;
 public class MlvRentalService {
 
     @EJB
-    private mlvRentalDAO ejbRef;// Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Web Service Operation")
+    private mlvRentalDAO ejbRef;
 
     @WebMethod(operationName = "addRental")
     @Oneway
-    public void addRental(@WebParam(name = "rental") Rental rental) {
-        ejbRef.addRental(rental);
+    public void addRental(@WebParam(name = "user") PersonEntity user,
+            @WebParam(name = "rental") Rental rental) {
+        ejbRef.addRental(user, rental);
+    }
+
+    @WebMethod(operationName = "validateRental")
+    public boolean validateRental(@WebParam(name = "user") PersonEntity user,
+            @WebParam(name = "rental") Rental rental) {
+        return ejbRef.isRentalValid(user, rental);
     }
 
     @WebMethod(operationName = "updateRental")

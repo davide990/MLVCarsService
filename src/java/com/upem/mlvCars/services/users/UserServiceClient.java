@@ -48,11 +48,11 @@ public class UserServiceClient {
         TeacherService_Service sv_t = new TeacherService_Service();
         TeacherService service_t = sv_t.getTeacherServicePort();
 
-        if (PersonEntity.fromStudent(service.getStudentByID(id)) != null) {
+        if (service.getStudentByID(id) != null) {
             return PersonEntity.fromStudent(service.getStudentByID(id));
         }
 
-        if (PersonEntity.fromTeacher(service_t.getTeacherByID(id)) != null) {
+        if (service_t.getTeacherByID(id) != null) {
             return PersonEntity.fromTeacher(service_t.getTeacherByID(id));
         }
 

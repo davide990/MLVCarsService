@@ -12,6 +12,12 @@
   <message name="getAllVehiclesResponse">
     <part name="parameters" element="tns:getAllVehiclesResponse"/>
   </message>
+  <message name="updateVehicle">
+    <part name="parameters" element="tns:updateVehicle"/>
+  </message>
+  <message name="deleteVehicle">
+    <part name="parameters" element="tns:deleteVehicle"/>
+  </message>
   <message name="getVehicleByID">
     <part name="parameters" element="tns:getVehicleByID"/>
   </message>
@@ -42,11 +48,11 @@
   <message name="getCarByModelResponse">
     <part name="parameters" element="tns:getCarByModelResponse"/>
   </message>
-  <message name="deleteVehicle">
-    <part name="parameters" element="tns:deleteVehicle"/>
+  <message name="isVehicleOnSale">
+    <part name="parameters" element="tns:isVehicleOnSale"/>
   </message>
-  <message name="updateVehicle">
-    <part name="parameters" element="tns:updateVehicle"/>
+  <message name="isVehicleOnSaleResponse">
+    <part name="parameters" element="tns:isVehicleOnSaleResponse"/>
   </message>
   <message name="addVehicle">
     <part name="parameters" element="tns:addVehicle"/>
@@ -55,6 +61,12 @@
     <operation name="getAllVehicles">
       <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/getAllVehiclesRequest" message="tns:getAllVehicles"/>
       <output wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/getAllVehiclesResponse" message="tns:getAllVehiclesResponse"/>
+    </operation>
+    <operation name="updateVehicle">
+      <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/updateVehicle" message="tns:updateVehicle"/>
+    </operation>
+    <operation name="deleteVehicle">
+      <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/deleteVehicle" message="tns:deleteVehicle"/>
     </operation>
     <operation name="getVehicleByID">
       <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/getVehicleByIDRequest" message="tns:getVehicleByID"/>
@@ -76,11 +88,9 @@
       <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/getCarByModelRequest" message="tns:getCarByModel"/>
       <output wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/getCarByModelResponse" message="tns:getCarByModelResponse"/>
     </operation>
-    <operation name="deleteVehicle">
-      <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/deleteVehicle" message="tns:deleteVehicle"/>
-    </operation>
-    <operation name="updateVehicle">
-      <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/updateVehicle" message="tns:updateVehicle"/>
+    <operation name="isVehicleOnSale">
+      <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/isVehicleOnSaleRequest" message="tns:isVehicleOnSale"/>
+      <output wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/isVehicleOnSaleResponse" message="tns:isVehicleOnSaleResponse"/>
     </operation>
     <operation name="addVehicle">
       <input wsam:Action="http://services.mlvCars.upem.com/MlvCarsService/addVehicle" message="tns:addVehicle"/>
@@ -96,6 +106,18 @@
       <output>
         <soap:body use="literal"/>
       </output>
+    </operation>
+    <operation name="updateVehicle">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+    </operation>
+    <operation name="deleteVehicle">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
     </operation>
     <operation name="getVehicleByID">
       <soap:operation soapAction=""/>
@@ -142,17 +164,14 @@
         <soap:body use="literal"/>
       </output>
     </operation>
-    <operation name="deleteVehicle">
+    <operation name="isVehicleOnSale">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
       </input>
-    </operation>
-    <operation name="updateVehicle">
-      <soap:operation soapAction=""/>
-      <input>
+      <output>
         <soap:body use="literal"/>
-      </input>
+      </output>
     </operation>
     <operation name="addVehicle">
       <soap:operation soapAction=""/>

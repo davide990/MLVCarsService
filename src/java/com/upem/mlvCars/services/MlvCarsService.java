@@ -73,5 +73,15 @@ public class MlvCarsService {
     public Car getCarByModel(@WebParam(name = "model") String model) {
         return ejbRef.getCarByModel(model);
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "isVehicleOnSale")
+    public Boolean isVehicleOnSale(@WebParam(name = "vehicleID") int vehicleID) {
+        return ejbRef.isVehicleOnSale(vehicleID);
+    }
+    
+    
     
 }

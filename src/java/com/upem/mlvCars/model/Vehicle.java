@@ -30,11 +30,22 @@ public abstract class Vehicle implements Serializable {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "rentalPriceForDay")
+    private int rentalPriceForDay;
+
     @Column(name = "maxPassengers")
     private int maxPassengers;
 
     @Column(name = "maxSpeed")
     private int maxSpeed;
+
+    public int getRentalPriceForDay() {
+        return rentalPriceForDay;
+    }
+
+    public void setRentalPriceForDay(int rentalPriceForDay) {
+        this.rentalPriceForDay = rentalPriceForDay;
+    }
 
     public int getMaxPassengers() {
         return maxPassengers;
@@ -55,7 +66,7 @@ public abstract class Vehicle implements Serializable {
     public int getId() {
         return id;
     }
-    
+
     public void setId(int id) {
         this.id = id;
     }

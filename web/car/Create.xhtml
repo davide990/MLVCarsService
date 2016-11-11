@@ -24,6 +24,8 @@
                                        itemValue="#{carType}"
                                        itemLabel="#{carType}" />
                     </p:selectOneMenu>
+                    <h:outputLabel value="Rental price for day" for="rentalPriceForDay" />
+                    <p:spinner id="rentalPriceForDay" value="#{carController.selected.rentalPriceForDay}" title="Rental price for day" prefix="€" min="0" max="10000" />
                     <h:outputLabel value="#{bundle.CreateCarLabel_brand}" for="brand" />
                     <p:inputText id="brand" value="#{carController.selected.brand}" title="#{bundle.CreateCarTitle_brand}" />
                     <h:outputLabel value="#{bundle.CreateCarLabel_model}" for="model" />

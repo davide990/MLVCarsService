@@ -25,6 +25,7 @@ public class PersonEntity extends Person {
     {
         PersonEntity p = new PersonEntity();
         p.setBirthDate(s.getBirthDate());
+        p.setIban(s.getIban());
         p.setEmail(s.getEmail());
         p.setFirstName(s.getFirstName());
         p.setLastName(s.getLastName());
@@ -36,6 +37,7 @@ public class PersonEntity extends Person {
     {
         PersonEntity p = new PersonEntity();
         p.setBirthDate(s.getBirthDate());
+        p.setIban(s.getIban());
         p.setEmail(s.getEmail());
         p.setFirstName(s.getFirstName());
         p.setLastName(s.getLastName());

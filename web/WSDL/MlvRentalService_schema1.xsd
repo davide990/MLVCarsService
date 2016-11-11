@@ -11,14 +11,6 @@
 
   <xs:element name="getRentalByIDResponse" type="tns:getRentalByIDResponse"/>
 
-  <xs:element name="getVehiclesOnSale" type="tns:getVehiclesOnSale"/>
-
-  <xs:element name="getVehiclesOnSaleResponse" type="tns:getVehiclesOnSaleResponse"/>
-
-  <xs:element name="isVehicleOnSale" type="tns:isVehicleOnSale"/>
-
-  <xs:element name="isVehicleOnSaleResponse" type="tns:isVehicleOnSaleResponse"/>
-
   <xs:element name="isVehicleRented" type="tns:isVehicleRented"/>
 
   <xs:element name="isVehicleRentedResponse" type="tns:isVehicleRentedResponse"/>
@@ -28,6 +20,10 @@
   <xs:element name="numberOfPreviousRentalResponse" type="tns:numberOfPreviousRentalResponse"/>
 
   <xs:element name="updateRental" type="tns:updateRental"/>
+
+  <xs:element name="validateRental" type="tns:validateRental"/>
+
+  <xs:element name="validateRentalResponse" type="tns:validateRentalResponse"/>
 
   <xs:complexType name="getRentalByID">
     <xs:sequence>
@@ -44,10 +40,13 @@
   <xs:complexType name="rental">
     <xs:sequence>
       <xs:element name="car" type="tns:car" minOccurs="0"/>
-      <xs:element name="client_id" type="xs:long"/>
+      <xs:element name="carStatusAfterRental" type="xs:string" minOccurs="0"/>
+      <xs:element name="carStatusBeforeRental" type="xs:string" minOccurs="0"/>
+      <xs:element name="clientId" type="xs:int"/>
       <xs:element name="rentalEnd" type="xs:dateTime" minOccurs="0"/>
       <xs:element name="rentalPrice" type="xs:int"/>
       <xs:element name="rentalStart" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="userComment" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -56,6 +55,7 @@
       <xs:extension base="tns:vehicle">
         <xs:sequence>
           <xs:element name="airConditioner" type="xs:boolean"/>
+          <xs:element name="automaticTransmission" type="xs:boolean"/>
           <xs:element name="brand" type="xs:string" minOccurs="0"/>
           <xs:element name="model" type="xs:string" minOccurs="0"/>
           <xs:element name="purchaseDate" type="xs:dateTime" minOccurs="0"/>
@@ -67,20 +67,10 @@
 
   <xs:complexType name="vehicle" abstract="true">
     <xs:sequence>
+      <xs:element name="id" type="xs:int"/>
       <xs:element name="maxPassengers" type="xs:int"/>
       <xs:element name="maxSpeed" type="xs:int"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="isVehicleOnSale">
-    <xs:sequence>
-      <xs:element name="vehichleID" type="xs:int"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="isVehicleOnSaleResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:boolean"/>
+      <xs:element name="rentalPriceForDay" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -91,16 +81,6 @@
   <xs:complexType name="getAllRentalsResponse">
     <xs:sequence>
       <xs:element name="return" type="tns:rental" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="getVehiclesOnSale">
-    <xs:sequence/>
-  </xs:complexType>
-
-  <xs:complexType name="getVehiclesOnSaleResponse">
-    <xs:sequence>
-      <xs:element name="return" type="tns:vehicle" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -116,6 +96,12 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="updateRental">
+    <xs:sequence>
+      <xs:element name="rental" type="tns:rental" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="numberOfPreviousRental">
     <xs:sequence>
       <xs:element name="vehichleID" type="xs:int"/>
@@ -128,15 +114,42 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="updateRental">
+  <xs:complexType name="addRental">
     <xs:sequence>
+      <xs:element name="user" type="tns:personEntity" minOccurs="0"/>
       <xs:element name="rental" type="tns:rental" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="addRental">
+  <xs:complexType name="personEntity">
+    <xs:complexContent>
+      <xs:extension base="tns:person">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="person" abstract="true">
     <xs:sequence>
+      <xs:element name="birthDate" type="xs:anySimpleType" minOccurs="0"/>
+      <xs:element name="email" type="xs:string" minOccurs="0"/>
+      <xs:element name="firstName" type="xs:string" minOccurs="0"/>
+      <xs:element name="iban" type="xs:string" minOccurs="0"/>
+      <xs:element name="id" type="xs:int"/>
+      <xs:element name="lastName" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="validateRental">
+    <xs:sequence>
+      <xs:element name="user" type="tns:personEntity" minOccurs="0"/>
       <xs:element name="rental" type="tns:rental" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="validateRentalResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
     </xs:sequence>
   </xs:complexType>
 

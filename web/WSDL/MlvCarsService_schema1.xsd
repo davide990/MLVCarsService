@@ -29,7 +29,38 @@
 
   <xs:element name="getVehicleByMaxPassengersResponse" type="tns:getVehicleByMaxPassengersResponse"/>
 
+  <xs:element name="isVehicleOnSale" type="tns:isVehicleOnSale"/>
+
+  <xs:element name="isVehicleOnSaleResponse" type="tns:isVehicleOnSaleResponse"/>
+
   <xs:element name="updateVehicle" type="tns:updateVehicle"/>
+
+  <xs:complexType name="isVehicleOnSale">
+    <xs:sequence>
+      <xs:element name="vehicleID" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="isVehicleOnSaleResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateVehicle">
+    <xs:sequence>
+      <xs:element name="v" type="tns:vehicle" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="vehicle" abstract="true">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"/>
+      <xs:element name="maxPassengers" type="xs:int"/>
+      <xs:element name="maxSpeed" type="xs:int"/>
+      <xs:element name="rentalPriceForDay" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
 
   <xs:complexType name="getCarByBrand">
     <xs:sequence>
@@ -48,6 +79,7 @@
       <xs:extension base="tns:vehicle">
         <xs:sequence>
           <xs:element name="airConditioner" type="xs:boolean"/>
+          <xs:element name="automaticTransmission" type="xs:boolean"/>
           <xs:element name="brand" type="xs:string" minOccurs="0"/>
           <xs:element name="model" type="xs:string" minOccurs="0"/>
           <xs:element name="purchaseDate" type="xs:dateTime" minOccurs="0"/>
@@ -55,19 +87,6 @@
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="vehicle" abstract="true">
-    <xs:sequence>
-      <xs:element name="maxPassengers" type="xs:int"/>
-      <xs:element name="maxSpeed" type="xs:int"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="updateVehicle">
-    <xs:sequence>
-      <xs:element name="v" type="tns:vehicle" minOccurs="0"/>
-    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="addVehicle">
